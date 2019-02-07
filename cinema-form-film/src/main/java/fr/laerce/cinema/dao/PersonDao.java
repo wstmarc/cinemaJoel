@@ -9,10 +9,13 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+import java.math.BigInteger;
 import java.util.List;
 
 @Repository
 public interface PersonDao extends CrudRepository<Person, Long> {
     public List<Person> findAllByOrderBySurname();
+    public boolean existsByIdtmdb(BigInteger id);
+    public Person findByIdtmdb(BigInteger id);
 
 }

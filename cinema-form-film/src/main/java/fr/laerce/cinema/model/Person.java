@@ -1,12 +1,15 @@
 package fr.laerce.cinema.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.checkerframework.common.aliasing.qual.Unique;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.math.BigInteger;
 import java.time.LocalDate;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -31,17 +34,23 @@ public class Person {
     @Basic
     @Column(name = "image_path", nullable = true, length = 80)
     private String imagePath;
+    @Basic
+    @Column(name = "name", nullable = true, length = 100)
+    private String name;
+    @Basic
+    @Column(name = "idtmdb")
+    private BigInteger idtmdb;
 
 //    @NotNull
 //
 //    private long tmdbid;
 
     @OneToMany(mappedBy = "director")
-    @JsonBackReference
+    @JsonIgnore
     private Set<Film> directedFilms;
 
     @OneToMany(mappedBy = "actor", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonBackReference
+    @JsonIgnore
     private Set<Play> roles;
 
     public long getId() {
@@ -92,32 +101,52 @@ public class Person {
         this.directedFilms = films;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public BigInteger getIdtmdb() {
+        return idtmdb;
+    }
+
+    public void setIdtmdb(BigInteger idtmdb) {
+        this.idtmdb = idtmdb;
+    }
+
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Person persons = (Person) o;
-
-        if (id != persons.id) return false;
-
-        return true;
+        if (!(o instanceof Person)) return false;
+        Person person = (Person) o;
+        return getId() == person.getId() &&
+                Objects.equals(getSurname(), person.getSurname()) &&
+                Objects.equals(getGivenname(), person.getGivenname()) &&
+                Objects.equals(getBirthday(), person.getBirthday()) &&
+                Objects.equals(getImagePath(), person.getImagePath()) &&
+                Objects.equals(getName(), person.getName()) &&
+                Objects.equals(getIdtmdb(), person.getIdtmdb());
     }
 
     @Override
     public int hashCode() {
-        int result = (int) (id ^ (id >>> 32));
-        return result;
+        return Objects.hash(getId(), getSurname(), getGivenname(), getBirthday(), getImagePath(), getName(), getIdtmdb());
     }
 
     @Override
     public String toString() {
         return "Person{" +
                 "id=" + id +
-                ", nom='" + surname + '\'' +
-                ", prenom='" + givenname + '\'' +
-                ", naissance=" + birthday +
-                ", photoPath='" + imagePath + '\'' +
+                ", surname='" + surname + '\'' +
+                ", givenname='" + givenname + '\'' +
+                ", birthday=" + birthday +
+                ", imagePath='" + imagePath + '\'' +
+                ", name='" + name + '\'' +
+                ", idtmdb=" + idtmdb +
                 '}';
     }
 }

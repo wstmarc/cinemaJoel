@@ -70,11 +70,13 @@ public class ImportFilmsFromTMDB {
             String line;
             while((line = br.readLine()) != null) {
                 JSONObject json = new JSONObject(line);
-                String title = json.get("original_title").toString();
-                long tmdbId = Long.valueOf(json.get("id").toString());
+                String original_title = json.get("original_title").toString();
+                long id = Long.valueOf(json.get("id").toString());
+                Double popularity = json.getDouble("popularity");
                 boolean adult = Boolean.valueOf(json.get("adult").toString());
-                TmdbFilm film = new TmdbFilm(title, tmdbId);
-                if(!adult && tmdbFilmDao.findByTmdbid(tmdbId) == null) {
+                Boolean video= json.getBoolean("video");
+                TmdbFilm film = new TmdbFilm(id, original_title, popularity,adult,video);
+                if(!adult && tmdbFilmDao.findById(id) == null) {
                     tmdbFilmDao.save(film);
                 }
             }
@@ -118,11 +120,13 @@ public class ImportFilmsFromTMDB {
             String line;
             while((line = br.readLine()) != null) {
                 JSONObject json = new JSONObject(line);
-                String title = json.get("original_title").toString();
-                long tmdbId = Long.valueOf(json.get("id").toString());
+                String original_title = json.get("original_title").toString();
+                long id = Long.valueOf(json.get("id").toString());
+                Double popularity = json.getDouble("popularity");
                 boolean adult = Boolean.valueOf(json.get("adult").toString());
-                TmdbFilm film = new TmdbFilm(title, tmdbId);
-                if(!adult && tmdbFilmDao.findByTmdbid(tmdbId) == null) {
+                Boolean video= json.getBoolean("video");
+                TmdbFilm film = new TmdbFilm(id, original_title, popularity,adult,video);
+                if(!adult && tmdbFilmDao.findById(id) == null) {
                     tmdbFilmDao.save(film);
                 }
             }

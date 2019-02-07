@@ -48,7 +48,7 @@ public class CinemaApplication {
     @Bean
 
     public CommandLineRunner runner(TmdbClient tc) {
-        return args ->  {tc.getMovieByTmdbId(616);
+        return args ->  {tc.getMovieByTmdbId(120);
 
         };
     }

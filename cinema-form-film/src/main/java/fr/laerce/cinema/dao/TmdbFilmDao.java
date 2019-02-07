@@ -9,5 +9,5 @@ import java.util.List;
 
 @Repository
 public interface TmdbFilmDao extends CrudRepository<TmdbFilm, Long> {
-    public TmdbFilm findByTmdbid(long id);
+    public TmdbFilm findById(long id);
 }

@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.validation.ConstraintViolationException;
+import java.math.BigInteger;
 import java.security.PublicKey;
 import java.util.List;
 
@@ -22,6 +23,9 @@ public class FilmManager {
     public Film getById(long id){
         return filmDao.findById(id).get();
     }
+    public boolean existsByIdtmbd(BigInteger id){
+        return filmDao.existsByIdtmbd(id);
+    }
 
     public List<Film> getAll(){
         return filmDao.findAllByOrderByTitle();
@@ -35,6 +39,10 @@ public class FilmManager {
     public Long save(Film film){
         filmDao.save(film);
         return film.getId();
+    }
+    public Film saveFilm(Film f)
+    {
+        return filmDao.save(f);
     }
 //   public Film save(Film film){
 //       if (filmDao.findByTitle(film.getTitle()).getTitle().isEmpty()){
@@ -88,6 +96,7 @@ public class FilmManager {
         return film;
 
     }
-
-
+     public Film findByIdTmdb(BigInteger id){
+        return filmDao.findByIdtmbd(id);
+     }
 }

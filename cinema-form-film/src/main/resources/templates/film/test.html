@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en"
+<html lang="fr"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:v-bind="http://www.w3.org/1999/xhtml">
 
@@ -10,11 +10,108 @@
 </head>
 
 <body>
+<div class="md-form mt-0">
+    Recherche<input class="form-control" type="text" placeholder="Search" id="searchTitre" aria-label="Search">
+</div>
+<table th:each="import: ${test}">
+    <tr><td th:utext="${import.getId()+' ' +import.getOriginal_title()}"></td>  </tr>
+</table>
+<!--lsjojsojsdopsjd-->
+<div id="page">
+    <div id="logo">
+        <div id="icon"></div>
+        <div id="movieAppLabel"></div>
+    </div>
+    <div id="holder">
+        <form action="http://www.themoviedb.org/search" method="post" target="_blank">
+            <fieldset>
+                <input type="text" id="movieTitre" name="search" />
+            </fieldset>
+        </form>
+        <button href="#" id="submit">Submit</button>
+    </div>
+    <div id="message"></div>
 
-<div th:each="import: ${test}">
-    <td><span th:utext="${import.getId()+' ' +import.getTitle()}"></span>  </td>
 </div>
 
 
+<script type="application/javascript">
+    // function search() {
+    //     // var movieTilte = $('#searchTitre').val();
+    //     // var url1 = "https://api.themoviedb.org/3/search/movie?include_adult=false&page=1&query=";
+    //     // var url2 = "&language=en-FR&api_key=1348a42689a984e53728a4b3e41f7e11";
+    //     // var searchResult = url1+movieTilte+url2;
+    //     var film = $('#searchTitre').val();
+    //     $.ajax({
+    //         url: 'https://api.themoviedb.org/3/search/movie?api_key=1348a42689a984e53728a4b3e41f7e11&language=fr-FR&query='+film+'&page=1&include_adult=false',
+    //         type: 'post',
+    //         dataType: 'json',
+    //         contentType: 'application/json',
+    //         success: onSuccessDialog
+    //     });
+    // }
+    // function onSuccessDialog(result) {
+    //     $('#rgenre' + result.id).remove();
+    // }
+    $(document).ready(function () {
+        $("#submit").click(function (e) {
+            var validate = Validate();
+            $("#message").html(validate);
+            if (validate.length == 0) {
+                CallAPI(1);
+            }
+        });
+        function CallAPI(page) {
+            $.ajax({
+
+                url: "https://api.themoviedb.org/3/search/movie?language=en-FR&query=" + $("#searchInput").val() + "&page=" + page + "&include_adult=false",
+                data: { "api_key": "1348a42689a984e53728a4b3e41f7e11" },
+                dataType: "json",
+                success: function (result, status, xhr) {
+                    var resultHtml = $("<div class=\"resultDiv\"><p>Titre</p>");
+                    for (i = 0; i < result["results"].length; i++) {
+
+                        var image = result["results"][i]["title"] == null ? "Image/no-image.png" : "https://image.tmdb.org/t/p/w500/" + result["results"][i]["title"];
+
+                        resultHtml.append("<div class=\"result\" resourceId=\"" + result["results"][i]["id"] + "\">"  + result["results"][i]["title"] + "</a></p></div>")
+                    }
+
+                    resultHtml.append("</div>");
+                    $("#message").html(resultHtml);
+
+                    // Paging(result["total_pages"]);
+                },
+                error: function (xhr, status, error) {
+                    $("#message").html("Result: " + status + " " + error + " " + xhr.status + " " + xhr.statusText)
+                }
+            });
+        }
+
+        function Validate() {
+            var errorMessage = "";
+            if ($("#searchInput").val() == "") {
+                errorMessage += "► Enter Search Text";
+            }
+            return errorMessage;
+        }
+
+        // function Paging(totalPage) {
+        //     var obj = $("#pagination").twbsPagination({
+        //         totalPages: totalPage,
+        //         visiblePages: 5,
+        //         onPageClick: function (event, page) {
+        //             CallAPI(page);
+        //         }
+        //     });
+        // }
+        $(document).ajaxStart(function () {
+            $(".imageDiv img").show();
+        });
+
+        $(document).ajaxStop(function () {
+            $(".imageDiv img").hide();
+        });
+    });
+</script>
 </body>
 </html>
