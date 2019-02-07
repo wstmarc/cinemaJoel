@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:v-bind="http://www.w3.org/1999/xhtml">
+
+
+<head>
+    <meta charset="UTF-8">
+    <title>Liste des films</title>
+    <div th:replace="fragments/layout :: header-css">
+
+    </div>
+</head>
+
+<body>
+
+<div th:include="fragments/layout :: header-page">
+</div>
+<!--bouton ajouter un film-->
+<br><a href="/film/add"><button class="right floated ui yellow button">
+    <i class="white plus icon"></i> Ajouter un film</button></a>
+
+
+
+<div class="ui container padded grid">
+    <div class="two column row" th:each="film: ${films}">
+        <div class="one wide middle aligned column" id="rgenre" >
+            <div class="ui tiny image">
+                <img src="http://fr.web.img4.acsta.net/r_1920_1080/pictures/15/10/18/18/56/052074.jpg"
+                th:src="@{'/img/poster/film/'+${film.id}}">
+            </div>
+        </div>
+        <div class="fifteen wide middle aligned column">
+            <p class="">
+                <span th:text="${film.title}">Titre du film</span>
+                <a href="#" th:href="@{'/film/detail/'+${film.id}}"><i class="green small eye icon"></i></a>
+                <a href="#" th:href="@{'/film/mod/'+${film.id}}"><i class="small edit icon"></i></a>
+                <a th:onclick="'veriDialog('+${film.id}+')'" ><i class="red small erase icon"></i></a>
+            </p>
+            </div>
+    </div>
+</div>
+
+<!--dfhjifj-->
+<!--<div id="modalUi" class="ui modal">-->
+    <!--<div class="ui container padded">-->
+        <!--<div class="Header">-->
+            <!--<h3>Genre</h3>-->
+        <!--</div>-->
+        <!--<div class="ui padded form">-->
+            <!--<input type="hidden" name="id" id="id-genre">-->
+            <!--<div class="fourteen wide field">-->
+                <!--<input type="text" name="name" id="name-genre">-->
+            <!--</div>-->
+            <!--<div class="actions">-->
+                <!--<div class="circular ui green icon button" onclick="addGenre()" id="add-button">-->
+                    <!--<i class="white plus icon"></i>-->
+                <!--</div>-->
+                <!--<div class="circular ui green icon button" onclick="updateGenre()" id="mod-button">-->
+                    <!--<i class="white check icon icon"></i>-->
+                <!--&lt;!&ndash;</div>&ndash;&gt;-->
+                <!--&lt;!&ndash;<div class="circular ui icon red button" onclick="veriDialog()" id="del-button">&ndash;&gt;-->
+                    <!--&lt;!&ndash;<i class="white minus icon"></i>&ndash;&gt;-->
+                <!--&lt;!&ndash;</div>&ndash;&gt;-->
+                <!--<div class="circular ui icon blue button" onclick="exitDialog()" id="exit-button">-->
+                    <!--<i class="white close icon icon"></i>-->
+                <!--</div>-->
+
+            <!--</div>-->
+        <!--</div>-->
+    <!--</div>-->
+<!--</div>-->
+
+<!--impossible-->
+<div id="erreur" class="ui error message">
+    <i class="close icon">Erreur</i>
+</div>
+
+<!--verification de suppression-->
+<div id="supp" class="ui green mini modal">
+    <div class="ui red header">Attention! </div>
+    <div class="content">
+        <p>Êtes-vous sûr de vouloir supprimer ce genre   </p>
+    </div>
+    <!--<div class="actions">-->
+    <!--<div class="ui positive right labeled icon button" onclick="eraseGenre()" >oui<i class="checkmark icon"></i></div>-->
+    <!--<div class="ui negative right labeled icon button" >Non<i class="close icon"></i></div>-->
+    <!--&lt;!&ndash;<div class="ui minus button" onclick="exitDialog()">Cancel</div>&ndash;&gt;-->
+    <!--</div>-->
+    <div class="actions">
+        <input id="modal-id" type="text" hidden="">
+        <!--<div class="ui approve labeled icon button" onclick="eraseGenre()">Oh oui<i class="checkmark green icon"></i></div>-->
+        <div class="ui green approve right labeled icon button"  onclick="eraseGenre()">oui<i class="checkmark icon"></i></div>
+        <!--<div class="ui button">Fuck, pas besoin de ce bouton!</div>-->
+        <div class="ui red cancel right labeled icon button" onclick="exitDialog()">Non<i class="close icon"></i></div>
+    </div>
+</div>
+
+<div th:include="fragments/layout :: footer-js"></div>
+
+<script type="application/javascript">
+    $('#menu-films').addClass("active");
+    $('.ui.dropdown').dropdown();
+    $('#supp').modal('hide');
+    $('#erreur').modal('hide');
+    $(document).ready(function () {
+        tinymce.init({
+            selector: '#summary'
+        });
+    });
+
+
+    //
+    // function openDialogAdd() {
+    //     $('#supp').modal('hide');
+    //     $('#erreur').modal('hide');
+    //     $('#id-genre').val(0);
+    //     $('#name-genre').val("");
+    //     $('#add-button').show();
+    //     $('#mod-button').hide();
+    //     $('#del-button').hide();
+    //     $('#modalUi').modal('show');
+    // }
+    
+    function eraseGenre() {
+        console.log("aaaaaaaaa")
+        $('#supp').modal('hide');
+        var id = $('#modal-id').val();
+        console.log(id);
+        console.log(("JOEL TES MOCHE"))
+        $.ajax({
+            url: '/api/film/' + id,
+            type: 'delete',
+            dataType: 'json',
+            contentType: 'application/json',
+            success: onSuccessEraseNameGenre,
+            error: onErrorOnGenreApi,
+        });
+    }
+
+
+
+
+    function onErrorOnGenreApi(jqXHR, textStatus, errorThrown) {
+        console.log('jqXHR:');
+        console.log(jqXHR);
+        console.log("message d'erreur: " + jqXHR.responseJSON.message);
+        console.log('textStatus:');
+        console.log(textStatus);
+        console.log('errorThrown:');
+        console.log(errorThrown);
+        $('#erreur').text("Echec de l'opération\n"+jqXHR.responseJSON.message);
+        $('#erreur').modal('show');
+    }
+
+
+    function onSuccessEraseNameGenre(result) {
+        $('#rgenre' + result.id).remove();
+    }
+
+    function exitDialog() {
+        $('#modalUi').modal('hide');
+    }
+
+    /**/
+    function veriDialog(id){
+        console.log("aaaaaaaaa")
+        $('#supp').modal('show');
+        $('#modal-id').val(id);
+    }
+
+
+</script>
+
+
+
+
+
+</body>
+</html>

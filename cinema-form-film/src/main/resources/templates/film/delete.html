@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <div th:replace="fragments/layout :: header-css">
+
+    </div>
+</head>
+<body>
+
+<div th:include="fragments/layout :: header-page">
+</div>
+
+<p>supprimer</p>
+
+<div th:include="fragments/layout :: footer-js"></div>
+<script type="application/javascript">
+    $('#menu-films').addClass("active");
+</script>
+</body>
+</html>
