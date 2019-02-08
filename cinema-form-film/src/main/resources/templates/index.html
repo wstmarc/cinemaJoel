@@ -2,9 +2,9 @@
 <html lang="fr" xmlns:th="http://www.thymeleaf.org" xmlns:v-bind="http://www.w3.org/1999/xhtml">
 <html>
 <head>
-    <title>Implement TheMovieDB (TMDB) API with jQuery AJAX | YogiHosting Demo</title>
+    <title>recherche film</title>
     <meta charset="utf-8" />
-    <link rel="icon" type="image/png" href="http://www.yogihosting.com/wp-content/themes/yogi-yogihosting/Images/favicon.ico" />
+    <!--<link rel="icon" type="image/png" href="http://www.yogihosting.com/wp-content/themes/yogi-yogihosting/Images/favicon.ico" />-->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
     <style>
         body {
@@ -146,12 +146,13 @@
     </style>
 </head>
 <body>
-    <h1>Recherche personne</h1>
-    <h2><a href="http://www.yogihosting.com/implement-tmdb-api-with-jquery-ajax/">Read the tutorial on YogiHosting » </a><button id="reset">Reset »</button></h2>
-    <h3>Important Link - <a href="http://www.yogihosting.com/jquery-ajax/">jQuery AJAX</a></h3>
+    <h1>Recherche Film</h1>
+
+    <button id="reset">Reset »</button></h2>
+    <!--<h3>Important Link - <a href="http://www.yogihosting.com/jquery-ajax/">jQuery AJAX</a></h3>-->
     <div class="container">
         <div id="apiDiv">
-            <h4>Enter the Search Text and Press Submit Button</h4>
+            <h4>entrer un cljdl </h4>
             <input type="text" id="searchInput" placeholder="Search actor" />
             <button id="submit">Submit</button>
 
@@ -174,6 +175,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                     <a  id="ajout-film" class="btn btn-primary" data-dismiss="modal">Ajouter à ma liste de film</a>
                 </div>
             </div>
         </div>
@@ -199,19 +201,26 @@
             $("#message").on("click", ".result", function () {
                 var resourceId = $(this).attr("resourceId");
                 $.ajax({
-                    url: "https://api.themoviedb.org/3/person/" + resourceId + "?language=fr-FR",
+                    url: "https://api.themoviedb.org/3/movie/" + resourceId + "?language=fr-FR",
                     data: {
                         api_key: "1348a42689a984e53728a4b3e41f7e11"
                     },
                     dataType: 'json',
                     success: function (result, status, xhr) {
-                        $("#modalTitleH4").html(result["name"]);
+                        $("#modalTitleH4").html(result["title"]);
 
-                        var image = result["profile_path"] == null ? "Image/no-image.png" : "https://image.tmdb.org/t/p/w500/" + result["profile_path"];
-                        var biography = result["biography"] == null ? "No information available" : result["biography"];
-
-                        var resultHtml = "<p class=\"text-center\"><img src=\"" + image + "\"/></p><p>" + biography + "</p>";
-                        resultHtml += "<p>Birdthday: " + result["birthday"] + "</p><p>Place of Birth: " + result["place_of_birth"] + "";
+                        var image = result["poster_path"] == null ? "Image/no-image.png" : "https://image.tmdb.org/t/p/w500/" + result["poster_path"];
+                        var overview = result["overview"] == null ? "No information available" : result["overview"];
+                        var genres = result["genres"] == null ? "No information available" : result["genres"];
+                        var id = result["id"] == null ? "No information available" : result["id"];
+                        $("#ajout-film").attr("href","/film/tmdb/"+id);
+                        var genresNom="";
+                        for (var i = 0;i<genres.length;i++){
+                            genresNom+=genres[i].name+" ";
+                        }
+                        console.log(genresNom);
+                        var resultHtml = "<p class=\"text-center\"><img src=\"" + image + "\"/></p><p>Genres de film: "+genresNom+"</p><p>Résumé : " + overview + "</p>";
+                        resultHtml += "<p>Date de sortie: " + result["release_date"] + "</p><p>popularity: " + result["popularity"] + "";
 
                         $("#modalBodyDiv").html(resultHtml)
 
@@ -233,16 +242,16 @@
 
             function CallAPI(page) {
                 $.ajax({
-                    url: "https://api.themoviedb.org/3/search/person?language=en-US&query=" + $("#searchInput").val() + "&page=" + page + "&include_adult=false",
-                    data: { "api_key": "3356865d41894a2fa9bfa84b2b5f59bb" },
+                    url: "https://api.themoviedb.org/3/search/movie?language=fr-FR&query=" + $("#searchInput").val() + "&page=" + page + "&include_adult=false",
+                    data: { "api_key": "1348a42689a984e53728a4b3e41f7e11" },
                     dataType: "json",
                     success: function (result, status, xhr) {
                         var resultHtml = $("<div class=\"resultDiv\"><p>Names</p>");
                         for (i = 0; i < result["results"].length; i++) {
 
-                            var image = result["results"][i]["profile_path"] == null ? "Image/no-image.png" : "https://image.tmdb.org/t/p/w500/" + result["results"][i]["profile_path"];
+                            var image = result["results"][i]["poster_path"] == null ? "Image/no-image.png" : "https://image.tmdb.org/t/p/w500/" + result["results"][i]["poster_path"];
 
-                            resultHtml.append("<div class=\"result\" resourceId=\"" + result["results"][i]["id"] + "\">" + "<img src=\"" + image + "\" />" + "<p><a>" + result["results"][i]["name"] + "</a></p></div>")
+                            resultHtml.append("<div class=\"result\" resourceId=\"" + result["results"][i]["id"] + "\">" + "<img src=\"" + image + "\" />" + "<p><a>" + result["results"][i]["title"] + "</a></p></div>")
                         }
 
                         resultHtml.append("</div>");
@@ -264,15 +273,15 @@
                 return errorMessage;
             }
 
-            function Paging(totalPage) {
-                var obj = $("#pagination").twbsPagination({
-                    totalPages: totalPage,
-                    visiblePages: 5,
-                    onPageClick: function (event, page) {
-                        CallAPI(page);
-                    }
-                });
-            }
+                function Paging(totalPage) {
+                    var obj = $("#pagination").twbsPagination({
+                        totalPages: totalPage,
+                        visiblePages: 5,
+                        onPageClick: function (event, page) {
+                            CallAPI(page);
+                        }
+                    });
+                }
 
         });
     </script>

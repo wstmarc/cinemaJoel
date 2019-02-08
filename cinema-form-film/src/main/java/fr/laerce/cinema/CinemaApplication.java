@@ -45,11 +45,11 @@ public class CinemaApplication {
         };
     }*/
 
-    @Bean
+//    @Bean
 
-    public CommandLineRunner runner(TmdbClient tc) {
-        return args ->  {tc.getMovieByTmdbId(120);
-
-        };
-    }
+//    public CommandLineRunner runner(TmdbClient tc) {
+//        return args ->  {tc.getMovieByTmdbId(120);
+//
+//        };
+//    }
 }
