@@ -10,6 +10,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigInteger;
+
 @Controller
 @RequestMapping("/film")
 public class FilmController {
@@ -41,9 +43,10 @@ public class FilmController {
         model.addAttribute("films", films);
         return "film/list";
     }
-    @GetMapping("/tmdb/{id}")
-    public String tmdbfilm(@PathVariable("id")long id, Model model) throws Exception {
-    tmdbClient.getMovieByTmdbId(id);
+    @GetMapping("/tmdb/{idtmdb}")
+    public String tmdbfilm(@PathVariable("idtmdb")BigInteger idtmdb, Model model) throws Exception {
+    tmdbClient.getMovieByTmdbId(idtmdb);
+    long id = filmManager.findByIdTmdb(idtmdb).getId();
     return "redirect:/film/detail/"+id;
     }
 

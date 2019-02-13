@@ -51,7 +51,7 @@ public class TmdbClient {
         return value.substring(0, value.length()-1).substring(1);
     }
 
-    public void getMovieByTmdbId(long id) throws Exception {
+    public void getMovieByTmdbId(BigInteger id) throws Exception {
         RestTemplate template = new RestTemplate();
         ResponseEntity<String> response;
         long reset;
