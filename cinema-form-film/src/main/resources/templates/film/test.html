@@ -25,7 +25,7 @@
     <div id="holder">
         <form action="http://www.themoviedb.org/search" method="post" target="_blank">
             <fieldset>
-                <input type="text" id="movieTitre" name="search" />
+                <input id="movie" type="text" /><button>Search</button>
             </fieldset>
         </form>
         <button href="#" id="submit">Submit</button>
@@ -53,63 +53,85 @@
     // function onSuccessDialog(result) {
     //     $('#rgenre' + result.id).remove();
     // }
-    $(document).ready(function () {
-        $("#submit").click(function (e) {
-            var validate = Validate();
-            $("#message").html(validate);
-            if (validate.length == 0) {
-                CallAPI(1);
-            }
-        });
-        function CallAPI(page) {
+    // $(document).ready(function () {
+    //     $("#submit").click(function (e) {
+    //         var validate = Validate();
+    //         $("#message").html(validate);
+    //         if (validate.length == 0) {
+    //             CallAPI(1);
+    //         }
+    //     });
+    //     function CallAPI(page) {
+    //         $.ajax({
+    //
+    //             url: "https://api.themoviedb.org/3/search/movie?language=en-FR&query=" + $("#searchInput").val() + "&page=" + page + "&include_adult=false",
+    //             data: { "api_key": "1348a42689a984e53728a4b3e41f7e11" },
+    //             dataType: "json",
+    //             success: function (result, status, xhr) {
+    //                 var resultHtml = $("<div class=\"resultDiv\"><p>Titre</p>");
+    //                 for (i = 0; i < result["results"].length; i++) {
+    //
+    //                     var image = result["results"][i]["title"] == null ? "Image/no-image.png" : "https://image.tmdb.org/t/p/w500/" + result["results"][i]["title"];
+    //
+    //                     resultHtml.append("<div class=\"result\" resourceId=\"" + result["results"][i]["id"] + "\">"  + result["results"][i]["title"] + "</a></p></div>")
+    //                 }
+    //
+    //                 resultHtml.append("</div>");
+    //                 $("#message").html(resultHtml);
+    //
+    //                 // Paging(result["total_pages"]);
+    //             },
+    //             error: function (xhr, status, error) {
+    //                 $("#message").html("Result: " + status + " " + error + " " + xhr.status + " " + xhr.statusText)
+    //             }
+    //         });
+    //     }
+    //
+    //     function Validate() {
+    //         var errorMessage = "";
+    //         if ($("#searchInput").val() == "") {
+    //             errorMessage += "► Enter Search Text";
+    //         }
+    //         return errorMessage;
+    //     }
+    //
+    //     // function Paging(totalPage) {
+    //     //     var obj = $("#pagination").twbsPagination({
+    //     //         totalPages: totalPage,
+    //     //         visiblePages: 5,
+    //     //         onPageClick: function (event, page) {
+    //     //             CallAPI(page);
+    //     //         }
+    //     //     });
+    //     // }
+    //     $(document).ajaxStart(function () {
+    //         $(".imageDiv img").show();
+    //     });
+    //
+    //     $(document).ajaxStop(function () {
+    //         $(".imageDiv img").hide();
+    //     });
+    // });
+    $(document).ready(function() {
+        var url = 'http://api.themoviedb.org/3/',
+            mode = 'search/movie',
+            input,
+            movieName,
+            key = '?api_key=1348a42689a984e53728a4b3e41f7e11';
+
+        $('button').click(function() {
+            var input = $('#movie').val(),
+                movieName = encodeURI(input);
             $.ajax({
-
-                url: "https://api.themoviedb.org/3/search/movie?language=en-FR&query=" + $("#searchInput").val() + "&page=" + page + "&include_adult=false",
-                data: { "api_key": "1348a42689a984e53728a4b3e41f7e11" },
-                dataType: "json",
-                success: function (result, status, xhr) {
-                    var resultHtml = $("<div class=\"resultDiv\"><p>Titre</p>");
-                    for (i = 0; i < result["results"].length; i++) {
-
-                        var image = result["results"][i]["title"] == null ? "Image/no-image.png" : "https://image.tmdb.org/t/p/w500/" + result["results"][i]["title"];
-
-                        resultHtml.append("<div class=\"result\" resourceId=\"" + result["results"][i]["id"] + "\">"  + result["results"][i]["title"] + "</a></p></div>")
-                    }
-
-                    resultHtml.append("</div>");
-                    $("#message").html(resultHtml);
-
-                    // Paging(result["total_pages"]);
+                url: url + mode + key + '&query='+movieName ,
+                dataType: 'jsonp',
+                success: function(data) {
+                    console.log(data);
                 },
-                error: function (xhr, status, error) {
-                    $("#message").html("Result: " + status + " " + error + " " + xhr.status + " " + xhr.statusText)
+                error: function (request, status, error) {
+                    alert(status + ", " + error);
                 }
             });
-        }
-
-        function Validate() {
-            var errorMessage = "";
-            if ($("#searchInput").val() == "") {
-                errorMessage += "► Enter Search Text";
-            }
-            return errorMessage;
-        }
-
-        // function Paging(totalPage) {
-        //     var obj = $("#pagination").twbsPagination({
-        //         totalPages: totalPage,
-        //         visiblePages: 5,
-        //         onPageClick: function (event, page) {
-        //             CallAPI(page);
-        //         }
-        //     });
-        // }
-        $(document).ajaxStart(function () {
-            $(".imageDiv img").show();
-        });
-
-        $(document).ajaxStop(function () {
-            $(".imageDiv img").hide();
         });
     });
 </script>

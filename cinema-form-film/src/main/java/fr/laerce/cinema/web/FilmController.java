@@ -44,7 +44,6 @@ public class FilmController {
     @GetMapping("/tmdb/{id}")
     public String tmdbfilm(@PathVariable("id")long id, Model model) throws Exception {
     tmdbClient.getMovieByTmdbId(id);
-
     return "redirect:/film/detail/"+id;
     }
 
