@@ -65,7 +65,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" id="ajout-film" class="btn btn-success">Ajouter à ma liste de film</button>
+                <button  type="button" id="ajout-film" class="btn btn-success" data-loading-text="<i class='fa fa-spinner fa-spin '></i>">Ajouter à ma liste de film</button>
             </div>
         </div>
     </div>
@@ -118,11 +118,12 @@
             var overview = result["overview"] == null ? "No information available" : result["overview"];
             var genres = result["genres"] == null ? "No information available" : result["genres"];
             var idt = result["id"] == null ? "No information available" : result["id"];
-            $("#ajout-film").click( function () {
-                $("#ajout-film").click(function () {
-                    $(this).parent().append("<img src='/images/2.gif'>");
-                    $(this).hide();
-                });
+            $("#ajout-film").on("click", function () {
+                var $this = $(this);
+                $this.button('loading');
+                setTimeout(function() {
+                    $this.button('reset');
+                }, 500000);
 
                 $.ajax({
                     url: "/api/film/tmdb/" + idt,
