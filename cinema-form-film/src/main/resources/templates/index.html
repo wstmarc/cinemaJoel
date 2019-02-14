@@ -97,25 +97,33 @@
                 },
                 dataType: 'json',
                 success: modalDialog,
-                error: function (xhr, status, error) {
-                    $("#message").html("Result: " + status + " " + error + " " + xhr.status + " " + xhr.statusText)
-                }
+                error: modalErreur
             });
         });
+
+        function modalErreur(xhr, status, error) {
+            $("#message").html("Result: " + status + " " + error + " " + xhr.status + " " + xhr.statusText)
+        }
 
         function onSuccessAddFilm(result) {
             $("#myModal").modal("hide");
             $("#monModal").modal("show");
             $("#boutonSucces").attr("href", "/film/detail/" + result.id);
         }
-        function modalDialog (result) {
+
+        function modalDialog(result) {
             $("#modalTitleH4").html(result["title"]);
 
             var image = result["poster_path"] == null ? "Image/no-image.png" : "https://image.tmdb.org/t/p/w500/" + result["poster_path"];
             var overview = result["overview"] == null ? "No information available" : result["overview"];
             var genres = result["genres"] == null ? "No information available" : result["genres"];
             var idt = result["id"] == null ? "No information available" : result["id"];
-            $("#ajout-film").on("click", function () {
+            $("#ajout-film").click( function () {
+                $("#ajout-film").click(function () {
+                    $(this).parent().append("<img src='/images/2.gif'>");
+                    $(this).hide();
+                });
+
                 $.ajax({
                     url: "/api/film/tmdb/" + idt,
                     type: 'GET',
@@ -125,14 +133,13 @@
                 });
             })
 
-
             let genresNom = "";
             for (var i = 0; i < genres.length; i++) {
                 genresNom += genres[i].name + " ";
             }
             console.log(genresNom);
             var resultHtml = "<p class=\"text-center\"><img src=\"" + image + "\"/></p><p>Genres de film: " + genresNom + "</p><p>Résumé : " + overview + "</p>";
-            resultHtml += "<p>Date de sortie: " + result["release_date"] + "</p><p>popularity: " + result["popularity"] + "";
+            resultHtml += "<p>Date de sortie: " + result["release_date"] + "</p><p>Popularité: " + result["popularity"] + "";
 
             $("#modalBodyDiv").html(resultHtml)
 
@@ -152,26 +159,31 @@
                 url: "https://api.themoviedb.org/3/search/movie?language=fr-FR&query=" + $("#searchInput").val() + "&page=" + page + "&include_adult=false",
                 data: {"api_key": "1348a42689a984e53728a4b3e41f7e11"},
                 dataType: "json",
-                success: function (result, status, xhr) {
-                    var resultHtml = $("<div class=\"resultDiv\"><p>Names</p>");
-                    for (i = 0; i < result["results"].length; i++) {
-
-                        var image = result["results"][i]["poster_path"] == null ? "Image/no-image.png" : "https://image.tmdb.org/t/p/w500/" + result["results"][i]["poster_path"];
-
-                        resultHtml.append("<div class=\"result\" resourceId=\"" + result["results"][i]["id"] + "\">" + "<img src=\"" + image + "\" />" + "<p><a>" + result["results"][i]["title"] + "</a></p></div>")
-                    }
-
-                    resultHtml.append("</div>");
-                    $("#message").html(resultHtml);
-
-                    Paging(result["total_pages"]);
-                },
-                error: function (xhr, status, error) {
-                    $("#message").html("Result: " + status + " " + error + " " + xhr.status + " " + xhr.statusText)
-                }
+                success: onSuccesSearch,
+                error: onErrorSearch
             });
         }
 
+        function onSuccesSearch(result) {
+            var resultHtml = $("<div class=\"resultDiv\"><p>Names</p>");
+            for (i = 0; i < result["results"].length; i++) {
+
+                var image = result["results"][i]["poster_path"] == null ? "Image/no-image.png" : "https://image.tmdb.org/t/p/w500/" + result["results"][i]["poster_path"];
+
+                resultHtml.append("<div class=\"result\" resourceId=\"" + result["results"][i]["id"] + "\">" + "<img src=\"" + image + "\" />" + "<p><a>" + result["results"][i]["title"] + "</a></p></div>")
+            }
+
+            resultHtml.append("</div>");
+            $("#message").html(resultHtml);
+
+            Paging(result["total_pages"]);
+        }
+
+        function onErrorSearch(xhr, status, error) {
+            $("#message").html("Result: " + status + " " + error + " " + xhr.status + " " + xhr.statusText)
+        }
+
+        // si le champs est vide
         function Validate() {
             var errorMessage = "";
             if ($("#searchInput").val() == "") {
@@ -180,6 +192,7 @@
             return errorMessage;
         }
 
+        //la pagination
         function Paging(totalPage) {
             var obj = $("#pagination").twbsPagination({
                 totalPages: totalPage,
