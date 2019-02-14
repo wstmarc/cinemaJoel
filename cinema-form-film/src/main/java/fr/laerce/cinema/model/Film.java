@@ -167,12 +167,11 @@ public class Film {
                 Objects.equals(getImagePath(), film.getImagePath()) &&
                 Objects.equals(getSummary(), film.getSummary()) &&
                 Objects.equals(getReleaseDate(), film.getReleaseDate()) &&
-                Objects.equals(getIdtmbd(), film.getIdtmbd()) &&
-                Objects.equals(getDirector(), film.getDirector());
+                Objects.equals(getIdtmbd(), film.getIdtmbd());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getTitle(), getRating(), getImagePath(), getSummary(), getReleaseDate(), getIdtmbd(), getDirector());
+        return Objects.hash(getId(), getTitle(), getRating(), getImagePath(), getSummary(), getReleaseDate(), getIdtmbd());
     }
 }

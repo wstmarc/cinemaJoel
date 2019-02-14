@@ -17,7 +17,7 @@ public class Play {
     @Column(name = "rank", nullable = false)
     private int rank;
     @Basic
-    @Column(name = "name", nullable = false, length = 90)
+    @Column(name = "name", nullable = false)
     private String name;
     @ManyToOne
     @JoinColumn(name="person_id")

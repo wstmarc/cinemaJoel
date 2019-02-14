@@ -1,8 +1,10 @@
 package fr.laerce.cinema.dao;
 
+import fr.laerce.cinema.model.Film;
 import fr.laerce.cinema.model.Genre;
 import org.springframework.data.repository.CrudRepository;
 
+import java.math.BigInteger;
 import java.util.List;
 
 /**
@@ -15,4 +17,8 @@ public interface GenreDao extends CrudRepository<Genre, Long> {
      */
     public List<Genre> findAllByOrderByNameAsc();
     public  Genre findByName(String name);
+
+    Genre findByIdtmdb(BigInteger id);
+
+    boolean existsByIdtmdb(BigInteger id);
 }

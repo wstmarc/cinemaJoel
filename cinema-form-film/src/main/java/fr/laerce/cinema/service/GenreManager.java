@@ -1,10 +1,12 @@
 package fr.laerce.cinema.service;
 
 import fr.laerce.cinema.dao.GenreDao;
+import fr.laerce.cinema.model.Film;
 import fr.laerce.cinema.model.Genre;
 import org.springframework.stereotype.Component;
 
 import javax.validation.ConstraintViolationException;
+import java.math.BigInteger;
 import java.util.List;
 
 /**
@@ -52,9 +54,9 @@ public class GenreManager {
      * @return le genre sauvegardé ou créé
      */
     public Genre save(Genre genre){
-        if (genreDao.findByName(genre.getName())!=null){
-            throw new IllegalArgumentException("Le genre " +genre.getName()+" existe deja");
-        }
+//        if (genreDao.findByName(genre.getName())!=null){
+//            throw new IllegalArgumentException("Le genre " +genre.getName()+" existe deja");
+//        }
         return genreDao.save(genre);
 //        try{
 //            genre = genreDao.save(genre);
@@ -77,6 +79,13 @@ public class GenreManager {
         }
         genreDao.deleteById(inbase.getId());
         return inbase;
+    }
+    public Genre findByIdTmdb(BigInteger id){
+        return genreDao.findByIdtmdb(id);
+    }
+
+    public boolean existsByIdtmdb(BigInteger id){
+        return genreDao.existsByIdtmdb(id);
     }
 
 }

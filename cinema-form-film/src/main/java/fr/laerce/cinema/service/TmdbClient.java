@@ -2,6 +2,7 @@ package fr.laerce.cinema.service;
 
 import fr.laerce.cinema.dao.RoleDao;
 import fr.laerce.cinema.model.Film;
+import fr.laerce.cinema.model.Genre;
 import fr.laerce.cinema.model.Person;
 import fr.laerce.cinema.model.Play;
 import org.json.JSONArray;
@@ -12,7 +13,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
-import javax.swing.*;
 import java.io.InputStream;
 import java.math.BigInteger;
 import java.net.URL;
@@ -21,7 +21,8 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
-
+import java.util.HashSet;
+import java.util.Set;
 
 
 @Component
@@ -37,6 +38,9 @@ public class TmdbClient {
     PersonManager personManager;
     @Autowired
     RoleDao roleDao;
+    @Autowired
+    GenreManager genreManager;
+
 
 
     private long secondsBeforeReset(String value){
@@ -81,11 +85,29 @@ public class TmdbClient {
 
 //        System.out.println("Titre : "+film.getString("title"));
 
-
+        Set<Genre> genres1 = new HashSet<>();
         for(int i = 0; i < genres.length(); i++){
             JSONObject genre = (JSONObject) genres.get(i);
+            BigInteger idgenre = new BigInteger(genre.getString("id"));
+            if (genreManager.existsByIdtmdb( idgenre)){
+                genres1.add(genreManager.findByIdTmdb(idgenre));
+            }
+            else{
+                Genre newGenre = new Genre();
+                newGenre.setName(genre.getString("name"));
+                newGenre.setIdtmdb(idgenre);
+                newGenre = genreManager.save(newGenre);
+                genres1.add(newGenre);
+            }
+
+
+
+
+
             System.out.println("- Genre : "+genre.getString("name"));
         }
+        filmtest.setGenres(genres1);
+
         System.out.println("--------\nRequetes restantes : "+stripBraces(response.getHeaders().get("x-ratelimit-remaining").toString()));
         reset = secondsBeforeReset(response.getHeaders().get("x-ratelimit-reset").toString());
         System.out.println("Temps restant avant reset : "+reset+"\n\n");

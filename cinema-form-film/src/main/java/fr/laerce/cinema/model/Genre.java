@@ -1,13 +1,11 @@
 package fr.laerce.cinema.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.checkerframework.common.aliasing.qual.Unique;
 
 import javax.persistence.*;
-import javax.validation.constraints.Size;
+import java.math.BigInteger;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -28,10 +26,19 @@ public class Genre {
      * Le nom du genre
      */
     @Basic
-    @Unique
-//    @Size(min=2, max=30, message = "la longueur donnée est incorrecte")
     @Column(name = "name", nullable = false, length = 30)
     private String name;
+    @Basic
+    @Column(name = "idtmdb")
+    private BigInteger idtmdb;
+
+    public BigInteger getIdtmdb() {
+        return idtmdb;
+    }
+
+    public void setIdtmdb(BigInteger idtmdb) {
+        this.idtmdb = idtmdb;
+    }
 
     /**
      * L'ensemble des films associés au genre
@@ -69,20 +76,24 @@ public class Genre {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
+        if (!(o instanceof Genre)) return false;
         Genre genre = (Genre) o;
-
-        if (id != genre.id) return false;
-        if (name != null ? !name.equals(genre.name) : genre.name != null) return false;
-
-        return true;
+        return Objects.equals(getId(), genre.getId()) &&
+                Objects.equals(getName(), genre.getName()) &&
+                Objects.equals(getIdtmdb(), genre.getIdtmdb());
     }
 
     @Override
     public int hashCode() {
-        int result = (int) (id ^ (id >>> 32));
-        result = 31 * result + (name != null ? name.hashCode() : 0);
-        return result;
+        return Objects.hash(getId(), getName(), getIdtmdb());
+    }
+
+    @Override
+    public String toString() {
+        return "Genre{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", idtmdb=" + idtmdb +
+                '}';
     }
 }
