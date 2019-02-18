@@ -1,206 +1,340 @@
-<!DOCTYPE html>
+<!--<!DOCTYPE html>-->
+<!--<html lang="en"-->
+<!--xmlns:th="http://www.thymeleaf.org"-->
+<!--xmlns:v-bind="http://www.w3.org/1999/xhtml">-->
+
+
+<!--<head>-->
+<!--<meta charset="UTF-8">-->
+<!--<title>Liste des films</title>-->
+<!--<div th:replace="fragments/layout :: header-css">-->
+
+<!--</div>-->
+<!--</head>-->
+
+<!--<body>-->
+
+<!--<div th:include="fragments/layout :: header-page">-->
+<!--</div>-->
+<!--&lt;!&ndash;bouton ajouter un film&ndash;&gt;-->
+<!--<br><a href="/film/add"><button class="right floated ui yellow button">-->
+<!--<i class="white plus icon"></i> Ajouter un film</button></a>-->
+
+
+<!--&lt;!&ndash;<div class="ui container padded grid">&ndash;&gt;-->
+<!--&lt;!&ndash;<div class="two column row" th:each="film: ${films}">&ndash;&gt;-->
+<!--&lt;!&ndash;<div class="one wide middle aligned column" id="rgenre" >&ndash;&gt;-->
+<!--&lt;!&ndash;<div class="ui tiny image">&ndash;&gt;-->
+<!--&lt;!&ndash;<img src="http://fr.web.img4.acsta.net/r_1920_1080/pictures/15/10/18/18/56/052074.jpg"&ndash;&gt;-->
+<!--&lt;!&ndash;th:src="@{'/img/poster/film/'+${film.id}}">&ndash;&gt;-->
+<!--&lt;!&ndash;</div>&ndash;&gt;-->
+<!--&lt;!&ndash;</div>&ndash;&gt;-->
+<!--&lt;!&ndash;<div class="fifteen wide middle aligned column">&ndash;&gt;-->
+<!--&lt;!&ndash;<p class="">&ndash;&gt;-->
+<!--&lt;!&ndash;<span th:text="${film.title}">Titre du film</span>&ndash;&gt;-->
+<!--&lt;!&ndash;<a href="#" th:href="@{'/film/detail/'+${film.id}}"><i class="green small eye icon"></i></a>&ndash;&gt;-->
+<!--&lt;!&ndash;<a href="#" th:href="@{'/film/mod/'+${film.id}}"><i class="small edit icon"></i></a>&ndash;&gt;-->
+<!--&lt;!&ndash;<a th:onclick="'veriDialog('+${film.id}+')'" ><i class="red small erase icon"></i></a>&ndash;&gt;-->
+<!--&lt;!&ndash;</p>&ndash;&gt;-->
+<!--&lt;!&ndash;</div>&ndash;&gt;-->
+<!--&lt;!&ndash;</div>&ndash;&gt;-->
+<!--&lt;!&ndash;</div>&ndash;&gt;-->
+
+<!--&lt;!&ndash;dfhjifj&ndash;&gt;-->
+<!--&lt;!&ndash;<div id="modalUi" class="ui modal">&ndash;&gt;-->
+<!--&lt;!&ndash;<div class="ui container padded">&ndash;&gt;-->
+<!--&lt;!&ndash;<div class="Header">&ndash;&gt;-->
+<!--&lt;!&ndash;<h3>Genre</h3>&ndash;&gt;-->
+<!--&lt;!&ndash;</div>&ndash;&gt;-->
+<!--&lt;!&ndash;<div class="ui padded form">&ndash;&gt;-->
+<!--&lt;!&ndash;<input type="hidden" name="id" id="id-genre">&ndash;&gt;-->
+<!--&lt;!&ndash;<div class="fourteen wide field">&ndash;&gt;-->
+<!--&lt;!&ndash;<input type="text" name="name" id="name-genre">&ndash;&gt;-->
+<!--&lt;!&ndash;</div>&ndash;&gt;-->
+<!--&lt;!&ndash;<div class="actions">&ndash;&gt;-->
+<!--&lt;!&ndash;<div class="circular ui green icon button" onclick="addGenre()" id="add-button">&ndash;&gt;-->
+<!--&lt;!&ndash;<i class="white plus icon"></i>&ndash;&gt;-->
+<!--&lt;!&ndash;</div>&ndash;&gt;-->
+<!--&lt;!&ndash;<div class="circular ui green icon button" onclick="updateGenre()" id="mod-button">&ndash;&gt;-->
+<!--&lt;!&ndash;<i class="white check icon icon"></i>&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;</div>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;<div class="circular ui icon red button" onclick="veriDialog()" id="del-button">&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;<i class="white minus icon"></i>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;</div>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;<div class="circular ui icon blue button" onclick="exitDialog()" id="exit-button">&ndash;&gt;-->
+<!--&lt;!&ndash;<i class="white close icon icon"></i>&ndash;&gt;-->
+<!--&lt;!&ndash;</div>&ndash;&gt;-->
+
+<!--&lt;!&ndash;</div>&ndash;&gt;-->
+<!--&lt;!&ndash;</div>&ndash;&gt;-->
+<!--&lt;!&ndash;</div>&ndash;&gt;-->
+<!--&lt;!&ndash;</div>&ndash;&gt;-->
+
+<!--&lt;!&ndash;impossible&ndash;&gt;-->
+<!--&lt;!&ndash;<div id="erreur" class="ui error message">&ndash;&gt;-->
+<!--&lt;!&ndash;<i class="close icon">Erreur</i>&ndash;&gt;-->
+<!--&lt;!&ndash;</div>&ndash;&gt;-->
+
+<!--&lt;!&ndash;&lt;!&ndash;verification de suppression&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;<div id="supp" class="ui green mini modal">&ndash;&gt;-->
+<!--&lt;!&ndash;<div class="ui red header">Attention! </div>&ndash;&gt;-->
+<!--&lt;!&ndash;<div class="content">&ndash;&gt;-->
+<!--&lt;!&ndash;<p>Êtes-vous sûr de vouloir supprimer ce genre   </p>&ndash;&gt;-->
+<!--&lt;!&ndash;</div>&ndash;&gt;-->
+<!--&lt;!&ndash;<div class="actions">&ndash;&gt;-->
+<!--&lt;!&ndash;<div class="ui positive right labeled icon button" onclick="eraseGenre()" >oui<i class="checkmark icon"></i></div>&ndash;&gt;-->
+<!--&lt;!&ndash;<div class="ui negative right labeled icon button" >Non<i class="close icon"></i></div>&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;<div class="ui minus button" onclick="exitDialog()">Cancel</div>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;</div>&ndash;&gt;-->
+<!--&lt;!&ndash;<div class="actions">&ndash;&gt;-->
+<!--&lt;!&ndash;<input id="modal-id" type="text" hidden="">&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;<div class="ui approve labeled icon button" onclick="eraseGenre()">Oh oui<i class="checkmark green icon"></i></div>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;<div class="ui green approve right labeled icon button"  onclick="eraseGenre()">oui<i class="checkmark icon"></i></div>&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;<div class="ui button">Fuck, pas besoin de ce bouton!</div>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;<div class="ui red cancel right labeled icon button" onclick="exitDialog()">Non<i class="close icon"></i></div>&ndash;&gt;-->
+<!--&lt;!&ndash;</div>&ndash;&gt;-->
+<!--&lt;!&ndash;</div>&ndash;&gt;-->
+
+<!--&lt;!&ndash;<div th:include="fragments/layout :: footer-js"></div>&ndash;&gt;-->
+
+<!--&lt;!&ndash;<script type="application/javascript">&ndash;&gt;-->
+<!--&lt;!&ndash;$('#menu-films').addClass("active");&ndash;&gt;-->
+<!--&lt;!&ndash;$('.ui.dropdown').dropdown();&ndash;&gt;-->
+<!--&lt;!&ndash;$('#supp').modal('hide');&ndash;&gt;-->
+<!--&lt;!&ndash;$('#erreur').modal('hide');&ndash;&gt;-->
+<!--&lt;!&ndash;$(document).ready(function () {&ndash;&gt;-->
+<!--&lt;!&ndash;tinymce.init({&ndash;&gt;-->
+<!--&lt;!&ndash;selector: '#summary'&ndash;&gt;-->
+<!--&lt;!&ndash;});&ndash;&gt;-->
+<!--&lt;!&ndash;});&ndash;&gt;-->
+
+
+<!--&lt;!&ndash;//&ndash;&gt;-->
+<!--&lt;!&ndash;// function openDialogAdd() {&ndash;&gt;-->
+<!--&lt;!&ndash;//     $('#supp').modal('hide');&ndash;&gt;-->
+<!--&lt;!&ndash;//     $('#erreur').modal('hide');&ndash;&gt;-->
+<!--&lt;!&ndash;//     $('#id-genre').val(0);&ndash;&gt;-->
+<!--&lt;!&ndash;//     $('#name-genre').val("");&ndash;&gt;-->
+<!--&lt;!&ndash;//     $('#add-button').show();&ndash;&gt;-->
+<!--&lt;!&ndash;//     $('#mod-button').hide();&ndash;&gt;-->
+<!--&lt;!&ndash;//     $('#del-button').hide();&ndash;&gt;-->
+<!--&lt;!&ndash;//     $('#modalUi').modal('show');&ndash;&gt;-->
+<!--&lt;!&ndash;// }&ndash;&gt;-->
+
+<!--&lt;!&ndash;function eraseGenre() {&ndash;&gt;-->
+<!--&lt;!&ndash;console.log("aaaaaaaaa")&ndash;&gt;-->
+<!--&lt;!&ndash;$('#supp').modal('hide');&ndash;&gt;-->
+<!--&lt;!&ndash;var id = $('#modal-id').val();&ndash;&gt;-->
+<!--&lt;!&ndash;console.log(id);&ndash;&gt;-->
+<!--&lt;!&ndash;console.log(("JOEL TES MOCHE"))&ndash;&gt;-->
+<!--&lt;!&ndash;$.ajax({&ndash;&gt;-->
+<!--&lt;!&ndash;url: '/api/film/' + id,&ndash;&gt;-->
+<!--&lt;!&ndash;type: 'delete',&ndash;&gt;-->
+<!--&lt;!&ndash;dataType: 'json',&ndash;&gt;-->
+<!--&lt;!&ndash;contentType: 'application/json',&ndash;&gt;-->
+<!--&lt;!&ndash;success: onSuccessEraseNameGenre,&ndash;&gt;-->
+<!--&lt;!&ndash;error: onErrorOnGenreApi,&ndash;&gt;-->
+<!--&lt;!&ndash;});&ndash;&gt;-->
+<!--&lt;!&ndash;}&ndash;&gt;-->
+
+
+<!--&lt;!&ndash;function onErrorOnGenreApi(jqXHR, textStatus, errorThrown) {&ndash;&gt;-->
+<!--&lt;!&ndash;console.log('jqXHR:');&ndash;&gt;-->
+<!--&lt;!&ndash;console.log(jqXHR);&ndash;&gt;-->
+<!--&lt;!&ndash;console.log("message d'erreur: " + jqXHR.responseJSON.message);&ndash;&gt;-->
+<!--&lt;!&ndash;console.log('textStatus:');&ndash;&gt;-->
+<!--&lt;!&ndash;console.log(textStatus);&ndash;&gt;-->
+<!--&lt;!&ndash;console.log('errorThrown:');&ndash;&gt;-->
+<!--&lt;!&ndash;console.log(errorThrown);&ndash;&gt;-->
+<!--&lt;!&ndash;$('#erreur').text("Echec de l'opération\n"+jqXHR.responseJSON.message);&ndash;&gt;-->
+<!--&lt;!&ndash;$('#erreur').modal('show');&ndash;&gt;-->
+<!--&lt;!&ndash;}&ndash;&gt;-->
+
+
+<!--&lt;!&ndash;function onSuccessEraseNameGenre(result) {&ndash;&gt;-->
+<!--&lt;!&ndash;$('#rgenre' + result.id).remove();&ndash;&gt;-->
+<!--&lt;!&ndash;}&ndash;&gt;-->
+
+<!--&lt;!&ndash;function exitDialog() {&ndash;&gt;-->
+<!--&lt;!&ndash;$('#modalUi').modal('hide');&ndash;&gt;-->
+<!--&lt;!&ndash;}&ndash;&gt;-->
+
+<!--&lt;!&ndash;/**/&ndash;&gt;-->
+<!--&lt;!&ndash;function veriDialog(id){&ndash;&gt;-->
+<!--&lt;!&ndash;console.log("aaaaaaaaa")&ndash;&gt;-->
+<!--&lt;!&ndash;$('#supp').modal('show');&ndash;&gt;-->
+<!--&lt;!&ndash;$('#modal-id').val(id);&ndash;&gt;-->
+<!--&lt;!&ndash;}&ndash;&gt;-->
+
+
+<!--&lt;!&ndash;</script>&ndash;&gt;-->
+<!--&lt;!&ndash;<div class="container">&ndash;&gt;-->
+<!--&lt;!&ndash;<div class="wrapper" th:each="film: ${films}">&ndash;&gt;-->
+<!--&lt;!&ndash;<div class="col">&ndash;&gt;-->
+<!--&lt;!&ndash;<img th:src="@{'/img/poster/film/'+${film.id}}">&ndash;&gt;-->
+<!--&lt;!&ndash;<div class="card">&ndash;&gt;-->
+<!--&lt;!&ndash;<div class="card-body">&ndash;&gt;-->
+<!--&lt;!&ndash;<h5 class="card-title"><h3 th:text="${film.title}">Titre</h3></h5>&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;<p class="card-text">With supporting text below as a natural lead-in to additional content.</p>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;<a href="#" class="btn btn-primary"></a>&ndash;&gt;-->
+<!--&lt;!&ndash;</div>&ndash;&gt;-->
+<!--&lt;!&ndash;</div>&ndash;&gt;-->
+<!--&lt;!&ndash;</div>&ndash;&gt;-->
+
+<!--&lt;!&ndash;</div></div>&ndash;&gt;-->
+
+<!--&lt;!&ndash;<div class="container">&ndash;&gt;-->
+<!--&lt;!&ndash;<div class="row" th:each="film: ${films}">&ndash;&gt;-->
+<!--&lt;!&ndash;<div class="col-lg-3 col-md-3 col-sm-3 col-xs-6">&ndash;&gt;-->
+<!--&lt;!&ndash;<img style="width: 10%" th:src="@{'/img/poster/film/'+${film.id}}">&ndash;&gt;-->
+<!--&lt;!&ndash;</div>&ndash;&gt;-->
+<!--&lt;!&ndash;<div class="col-lg-3 col-md-3 col-sm-3 col-xs-6">&ndash;&gt;-->
+<!--&lt;!&ndash;<img src=https://i.scdn.co/image/2fd8fa0f7ef2f83691a0fb9628ee369b8e3b688e class="img-responsive">&ndash;&gt;-->
+<!--&lt;!&ndash;</div>&ndash;&gt;-->
+<!--&lt;!&ndash;<div class="col-lg-3 col-md-3 col-sm-3 col-xs-6">&ndash;&gt;-->
+<!--&lt;!&ndash;<img src=https://i.scdn.co/image/2fd8fa0f7ef2f83691a0fb9628ee369b8e3b688e class="img-responsive">&ndash;&gt;-->
+<!--&lt;!&ndash;</div>&ndash;&gt;-->
+<!--&lt;!&ndash;<div class="col-lg-3 col-md-3 col-sm-3 col-xs-6">&ndash;&gt;-->
+<!--&lt;!&ndash;<img src=https://i.scdn.co/image/2fd8fa0f7ef2f83691a0fb9628ee369b8e3b688e class="img-responsive">&ndash;&gt;-->
+<!--&lt;!&ndash;</div>&ndash;&gt;-->
+<!--&lt;!&ndash;</div>&ndash;&gt;-->
+<!--&lt;!&ndash;</div>&ndash;&gt;-->
+<!--&lt;!&ndash;<div class="container">&ndash;&gt;-->
+<!--&lt;!&ndash;<h1>Hello World!</h1>&ndash;&gt;-->
+<!--&lt;!&ndash;<div class="row" th:each="film: ${films}">&ndash;&gt;-->
+<!--&lt;!&ndash;<div class="col-sm-6" style="background-color:yellow;">&ndash;&gt;-->
+<!--&lt;!&ndash;<p>Lorem ipsum...</p>&ndash;&gt;-->
+<!--&lt;!&ndash;<img style="width: 10%" th:src="@{'/img/poster/film/'+${film.id}}">&ndash;&gt;-->
+<!--&lt;!&ndash;</div>&ndash;&gt;-->
+<!--&lt;!&ndash;<div class="col-sm-6" th:each="film: ${films}"  style="background-color:pink;">&ndash;&gt;-->
+<!--&lt;!&ndash;<p>Sed ut perspiciatis...</p>&ndash;&gt;-->
+<!--&lt;!&ndash;<img style="width: 10%" th:src="@{'/img/poster/film/'+${film.id}}">&ndash;&gt;-->
+<!--&lt;!&ndash;</div>&ndash;&gt;-->
+<!--&lt;!&ndash;</div>&ndash;&gt;-->
+<!--&lt;!&ndash;</div>&ndash;&gt;-->
+<!--<div class="row">-->
+<!--<div class="col-md-4" th:each="film: ${films}">-->
+
+<!--<div class="thumbnail">-->
+<!--<img style="width: 10%" th:src="@{'/img/poster/film/'+${film.id}}">-->
+
+<!--</div>-->
+<!--</div>-->
+<!--</body>-->
+<!--</html>-->
+
+<!doctype html>
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:v-bind="http://www.w3.org/1999/xhtml">
-
-
 <head>
     <meta charset="UTF-8">
-    <title>Liste des films</title>
-    <div th:replace="fragments/layout :: header-css">
-
-    </div>
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Title</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css"
+          integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
 </head>
-
 <body>
+<style>
+    #image
+    {
+        min-height: 80%;
+      max-width: 90%;
+        padding-top: 5px;
 
-<div th:include="fragments/layout :: header-page">
-</div>
-<!--bouton ajouter un film-->
-<br><a href="/film/add"><button class="right floated ui yellow button">
-    <i class="white plus icon"></i> Ajouter un film</button></a>
 
 
+    }
+    #titre-list-film{
+        text-align: center;
+    }
+    /*.thumb{*/
+        /*margin-top: 15px;*/
+        /*margin-bottom: 15px;*/
+    /*}*/
+    .flip-card {
+        background-color: transparent;
+        width: 300px;
+        height: 300px;
+        perspective: 1000px;
+    }
 
-<!--<div class="ui container padded grid">-->
-    <!--<div class="two column row" th:each="film: ${films}">-->
-        <!--<div class="one wide middle aligned column" id="rgenre" >-->
-            <!--<div class="ui tiny image">-->
-                <!--<img src="http://fr.web.img4.acsta.net/r_1920_1080/pictures/15/10/18/18/56/052074.jpg"-->
-                <!--th:src="@{'/img/poster/film/'+${film.id}}">-->
-            <!--</div>-->
-        <!--</div>-->
-        <!--<div class="fifteen wide middle aligned column">-->
-            <!--<p class="">-->
-                <!--<span th:text="${film.title}">Titre du film</span>-->
-                <!--<a href="#" th:href="@{'/film/detail/'+${film.id}}"><i class="green small eye icon"></i></a>-->
-                <!--<a href="#" th:href="@{'/film/mod/'+${film.id}}"><i class="small edit icon"></i></a>-->
-                <!--<a th:onclick="'veriDialog('+${film.id}+')'" ><i class="red small erase icon"></i></a>-->
-            <!--</p>-->
-            <!--</div>-->
-    <!--</div>-->
-<!--</div>-->
+    .flip-card-inner {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        text-align: center;
+        transition: transform 0.6s;
+        transform-style: preserve-3d;
+        box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    }
 
-<!--dfhjifj-->
-<!--<div id="modalUi" class="ui modal">-->
-    <!--<div class="ui container padded">-->
-        <!--<div class="Header">-->
-            <!--<h3>Genre</h3>-->
-        <!--</div>-->
-        <!--<div class="ui padded form">-->
-            <!--<input type="hidden" name="id" id="id-genre">-->
-            <!--<div class="fourteen wide field">-->
-                <!--<input type="text" name="name" id="name-genre">-->
-            <!--</div>-->
-            <!--<div class="actions">-->
-                <!--<div class="circular ui green icon button" onclick="addGenre()" id="add-button">-->
-                    <!--<i class="white plus icon"></i>-->
+    .flip-card:hover .flip-card-inner {
+        transform: rotateY(180deg);
+    }
+
+    .flip-card-front, .flip-card-back {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        backface-visibility: hidden;
+    }
+
+    .flip-card-front {
+        background-color: #bbb;
+        color: black;
+        z-index: 2;
+    }
+
+    .flip-card-back {
+        background-color: #2980b9;
+        color: white;
+        transform: rotateY(180deg);
+        z-index: 1;
+    }
+</style>
+<!--<div class="container-fluid">-->
+    <!--<div class="row">-->
+        <!--<div class=" col-sm-3 " th:each="film: ${films}">-->
+            <!--<div class="flip-card">-->
+                <!--<div class="flip-card-inner">-->
+                    <!--<div class="flip-card-front">-->
+                        <!--<img id="image" class="img-thumbnail" th:src="@{'/img/poster/film/'+${film.id}}">-->
+                    <!--</div>-->
                 <!--</div>-->
-                <!--<div class="circular ui green icon button" onclick="updateGenre()" id="mod-button">-->
-                    <!--<i class="white check icon icon"></i>-->
-                <!--&lt;!&ndash;</div>&ndash;&gt;-->
-                <!--&lt;!&ndash;<div class="circular ui icon red button" onclick="veriDialog()" id="del-button">&ndash;&gt;-->
-                    <!--&lt;!&ndash;<i class="white minus icon"></i>&ndash;&gt;-->
-                <!--&lt;!&ndash;</div>&ndash;&gt;-->
-                <!--<div class="circular ui icon blue button" onclick="exitDialog()" id="exit-button">-->
-                    <!--<i class="white close icon icon"></i>-->
+                <!--<div class="flip-card-back">-->
+                    <!--<h7><span id="titre-list-film"  th:text="${film.title}">Titre</span></h7>-->
                 <!--</div>-->
-
             <!--</div>-->
+
+
         <!--</div>-->
-    <!--</div>-->
-<!--</div>-->
-
-<!--impossible-->
-<!--<div id="erreur" class="ui error message">-->
-    <!--<i class="close icon">Erreur</i>-->
-<!--</div>-->
-
-<!--&lt;!&ndash;verification de suppression&ndash;&gt;-->
-<!--<div id="supp" class="ui green mini modal">-->
-    <!--<div class="ui red header">Attention! </div>-->
-    <!--<div class="content">-->
-        <!--<p>Êtes-vous sûr de vouloir supprimer ce genre   </p>-->
-    <!--</div>-->
-    <!--<div class="actions">-->
-    <!--<div class="ui positive right labeled icon button" onclick="eraseGenre()" >oui<i class="checkmark icon"></i></div>-->
-    <!--<div class="ui negative right labeled icon button" >Non<i class="close icon"></i></div>-->
-    <!--&lt;!&ndash;<div class="ui minus button" onclick="exitDialog()">Cancel</div>&ndash;&gt;-->
-    <!--</div>-->
-    <!--<div class="actions">-->
-        <!--<input id="modal-id" type="text" hidden="">-->
-        <!--&lt;!&ndash;<div class="ui approve labeled icon button" onclick="eraseGenre()">Oh oui<i class="checkmark green icon"></i></div>&ndash;&gt;-->
-        <!--<div class="ui green approve right labeled icon button"  onclick="eraseGenre()">oui<i class="checkmark icon"></i></div>-->
-        <!--&lt;!&ndash;<div class="ui button">Fuck, pas besoin de ce bouton!</div>&ndash;&gt;-->
-        <!--<div class="ui red cancel right labeled icon button" onclick="exitDialog()">Non<i class="close icon"></i></div>-->
-    <!--</div>-->
-<!--</div>-->
-
-<!--<div th:include="fragments/layout :: footer-js"></div>-->
-
-<!--<script type="application/javascript">-->
-    <!--$('#menu-films').addClass("active");-->
-    <!--$('.ui.dropdown').dropdown();-->
-    <!--$('#supp').modal('hide');-->
-    <!--$('#erreur').modal('hide');-->
-    <!--$(document).ready(function () {-->
-        <!--tinymce.init({-->
-            <!--selector: '#summary'-->
-        <!--});-->
-    <!--});-->
-
-
-    <!--//-->
-    <!--// function openDialogAdd() {-->
-    <!--//     $('#supp').modal('hide');-->
-    <!--//     $('#erreur').modal('hide');-->
-    <!--//     $('#id-genre').val(0);-->
-    <!--//     $('#name-genre').val("");-->
-    <!--//     $('#add-button').show();-->
-    <!--//     $('#mod-button').hide();-->
-    <!--//     $('#del-button').hide();-->
-    <!--//     $('#modalUi').modal('show');-->
-    <!--// }-->
-
-    <!--function eraseGenre() {-->
-        <!--console.log("aaaaaaaaa")-->
-        <!--$('#supp').modal('hide');-->
-        <!--var id = $('#modal-id').val();-->
-        <!--console.log(id);-->
-        <!--console.log(("JOEL TES MOCHE"))-->
-        <!--$.ajax({-->
-            <!--url: '/api/film/' + id,-->
-            <!--type: 'delete',-->
-            <!--dataType: 'json',-->
-            <!--contentType: 'application/json',-->
-            <!--success: onSuccessEraseNameGenre,-->
-            <!--error: onErrorOnGenreApi,-->
-        <!--});-->
-    <!--}-->
-
-
-
-
-    <!--function onErrorOnGenreApi(jqXHR, textStatus, errorThrown) {-->
-        <!--console.log('jqXHR:');-->
-        <!--console.log(jqXHR);-->
-        <!--console.log("message d'erreur: " + jqXHR.responseJSON.message);-->
-        <!--console.log('textStatus:');-->
-        <!--console.log(textStatus);-->
-        <!--console.log('errorThrown:');-->
-        <!--console.log(errorThrown);-->
-        <!--$('#erreur').text("Echec de l'opération\n"+jqXHR.responseJSON.message);-->
-        <!--$('#erreur').modal('show');-->
-    <!--}-->
-
-
-    <!--function onSuccessEraseNameGenre(result) {-->
-        <!--$('#rgenre' + result.id).remove();-->
-    <!--}-->
-
-    <!--function exitDialog() {-->
-        <!--$('#modalUi').modal('hide');-->
-    <!--}-->
-
-    <!--/**/-->
-    <!--function veriDialog(id){-->
-        <!--console.log("aaaaaaaaa")-->
-        <!--$('#supp').modal('show');-->
-        <!--$('#modal-id').val(id);-->
-    <!--}-->
-
-
-<!--</script>-->
-<!--<div class="container">-->
-    <!--<div class="wrapper" th:each="film: ${films}">-->
-    <!--<div class="col">-->
-        <!--<img th:src="@{'/img/poster/film/'+${film.id}}">-->
-        <!--<div class="card">-->
-            <!--<div class="card-body">-->
-                <!--<h5 class="card-title"><h3 th:text="${film.title}">Titre</h3></h5>-->
-                <!--&lt;!&ndash;<p class="card-text">With supporting text below as a natural lead-in to additional content.</p>&ndash;&gt;-->
-                <!--<a href="#" class="btn btn-primary"></a>-->
-            <!--</div>-->
-        <!--</div>-->
-    <!--</div>-->
-
-<!--</div></div>-->
-<div class="container">
-    <div class="row imagetiles">
-        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6">
-            <img src=https://i.scdn.co/image/2fd8fa0f7ef2f83691a0fb9628ee369b8e3b688e class="img-responsive">
-        </div>
-        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6">
-            <img src=https://i.scdn.co/image/2fd8fa0f7ef2f83691a0fb9628ee369b8e3b688e class="img-responsive">
-        </div>
-        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6">
-            <img src=https://i.scdn.co/image/2fd8fa0f7ef2f83691a0fb9628ee369b8e3b688e class="img-responsive">
-        </div>
-        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6">
-            <img src=https://i.scdn.co/image/2fd8fa0f7ef2f83691a0fb9628ee369b8e3b688e class="img-responsive">
+    </div>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-3" th:each="film: ${films}">
+                <div class="flip-card">
+                    <div class="flip-card-inner" >
+                        <div class="flip-card-front" >
+                            <img id="image0" class="img-thumbnail" th:src="@{'/img/poster/film/'+${film.id}}">
+                        </div>
+                        <div class="flip-card-back">
+                            <h7><span id="titre-list-film0"  th:text="${film.title}">Titre</span></h7>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-</div>
 
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js"
+            integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn"
+            crossorigin="anonymous"></script>
+</div>
 </body>
 </html>
