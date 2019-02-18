@@ -114,9 +114,10 @@
         function modalDialog(result) {
             $("#modalTitleH4").html(result["title"]);
 
-            var image = result["poster_path"] == null ? "Image/no-image.png" : "https://image.tmdb.org/t/p/w500/" + result["poster_path"];
+            var image = result["poster_path"] == null ? "images/no-image.png" : "https://image.tmdb.org/t/p/w500/" + result["poster_path"];
             var overview = result["overview"] == null ? "No information available" : result["overview"];
             var genres = result["genres"] == null ? "No information available" : result["genres"];
+            var compagni = result["production_companies"] == null ? "No information available" : result["production_companies"];
             var idt = result["id"] == null ? "No information available" : result["id"];
             $("#ajout-film").on("click", function () {
                 var $this = $(this);
@@ -138,8 +139,12 @@
             for (var i = 0; i < genres.length; i++) {
                 genresNom += genres[i].name + " ";
             }
-            console.log(genresNom);
-            var resultHtml = "<p class=\"text-center\"><img src=\"" + image + "\"/></p><p>Genres de film: " + genresNom + "</p><p>Résumé : " + overview + "</p>";
+            let compagni_name = "";
+            for (var i = 0; i < compagni.length; i++) {
+                compagni_name += compagni[i].name + " ";
+            }
+            console.log(compagni_name);
+            var resultHtml = "<p class=\"text-center\"><img src=\"" + image + "\"/></p><p>Genres de film: " + genresNom + "</p><p>Maison de production: "+compagni_name+"</p><p>Résumé : " + overview + "</p>";
             resultHtml += "<p>Date de sortie: " + result["release_date"] + "</p><p>Popularité: " + result["popularity"] + "";
 
             $("#modalBodyDiv").html(resultHtml)
@@ -169,7 +174,7 @@
             var resultHtml = $("<div class=\"resultDiv\"><p>Names</p>");
             for (i = 0; i < result["results"].length; i++) {
 
-                var image = result["results"][i]["poster_path"] == null ? "Image/no-image.png" : "https://image.tmdb.org/t/p/w500/" + result["results"][i]["poster_path"];
+                var image = result["results"][i]["poster_path"] == null ? "images/no-image.png" : "https://image.tmdb.org/t/p/w500/" + result["results"][i]["poster_path"];
 
                 resultHtml.append("<div class=\"result\" resourceId=\"" + result["results"][i]["id"] + "\">" + "<img src=\"" + image + "\" />" + "<p><a>" + result["results"][i]["title"] + "</a></p></div>")
             }

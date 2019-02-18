@@ -122,7 +122,7 @@ public class TmdbClient {
             JSONObject job = (JSONObject) crew.get(e);
             String namejob = job.getString("job");
 
-            if (job.getString("job").equals("Director")){
+            if (job.getString("job").equals("Director") ){
                 System.out.println(job);
                 String resourcepersonne = "https://api.themoviedb.org/3/person/"+job.getString("id")+"?api_key="+apiKey+"&language=fr-FR";
                 ResponseEntity<String> responsepersonne = template.getForEntity(resourcepersonne, String.class);

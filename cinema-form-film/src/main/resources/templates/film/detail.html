@@ -21,13 +21,13 @@
             </div>
         </div>
         <div class="twelve wide column">
-            <h1 th:text="${film.title}">Titre</h1>
+            <h1   th:text="${film.title}">Titre</h1>
             <div th:utext="${film.summary}">Résumé du film</div>
             <h4>Notation : <span th:text="${film.rating}">5.0</span></h4>
             <h4>Date de sortie : <span th:text="${film.releaseDate}">01/01/2000</span></h4>
             <h4>Réalisateur : <span th:text="${film.director.name}">John Doe</span></h4>
             <h4>Genres : <span th:each="genre: ${film.genres}"><span th:text="${genre.name}">genre </span>, </span></h4>
-            <h3>Casting</h3>
+            <h3>Auteur</h3>
             <h4 th:each="role: ${film.roles}"><span th:text="${role.actor.givenname}">John</span>
                 <span th:text="${role.actor.name}">Doe</span> joue : <span th:text="${role.name}">un rôle</span>
             </h4>

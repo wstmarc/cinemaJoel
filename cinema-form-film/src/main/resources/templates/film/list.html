@@ -22,24 +22,24 @@
 
 
 
-<div class="ui container padded grid">
-    <div class="two column row" th:each="film: ${films}">
-        <div class="one wide middle aligned column" id="rgenre" >
-            <div class="ui tiny image">
-                <img src="http://fr.web.img4.acsta.net/r_1920_1080/pictures/15/10/18/18/56/052074.jpg"
-                th:src="@{'/img/poster/film/'+${film.id}}">
-            </div>
-        </div>
-        <div class="fifteen wide middle aligned column">
-            <p class="">
-                <span th:text="${film.title}">Titre du film</span>
-                <a href="#" th:href="@{'/film/detail/'+${film.id}}"><i class="green small eye icon"></i></a>
-                <a href="#" th:href="@{'/film/mod/'+${film.id}}"><i class="small edit icon"></i></a>
-                <a th:onclick="'veriDialog('+${film.id}+')'" ><i class="red small erase icon"></i></a>
-            </p>
-            </div>
-    </div>
-</div>
+<!--<div class="ui container padded grid">-->
+    <!--<div class="two column row" th:each="film: ${films}">-->
+        <!--<div class="one wide middle aligned column" id="rgenre" >-->
+            <!--<div class="ui tiny image">-->
+                <!--<img src="http://fr.web.img4.acsta.net/r_1920_1080/pictures/15/10/18/18/56/052074.jpg"-->
+                <!--th:src="@{'/img/poster/film/'+${film.id}}">-->
+            <!--</div>-->
+        <!--</div>-->
+        <!--<div class="fifteen wide middle aligned column">-->
+            <!--<p class="">-->
+                <!--<span th:text="${film.title}">Titre du film</span>-->
+                <!--<a href="#" th:href="@{'/film/detail/'+${film.id}}"><i class="green small eye icon"></i></a>-->
+                <!--<a href="#" th:href="@{'/film/mod/'+${film.id}}"><i class="small edit icon"></i></a>-->
+                <!--<a th:onclick="'veriDialog('+${film.id}+')'" ><i class="red small erase icon"></i></a>-->
+            <!--</p>-->
+            <!--</div>-->
+    <!--</div>-->
+<!--</div>-->
 
 <!--dfhjifj-->
 <!--<div id="modalUi" class="ui modal">-->
@@ -72,109 +72,135 @@
 <!--</div>-->
 
 <!--impossible-->
-<div id="erreur" class="ui error message">
-    <i class="close icon">Erreur</i>
-</div>
+<!--<div id="erreur" class="ui error message">-->
+    <!--<i class="close icon">Erreur</i>-->
+<!--</div>-->
 
-<!--verification de suppression-->
-<div id="supp" class="ui green mini modal">
-    <div class="ui red header">Attention! </div>
-    <div class="content">
-        <p>Êtes-vous sûr de vouloir supprimer ce genre   </p>
-    </div>
+<!--&lt;!&ndash;verification de suppression&ndash;&gt;-->
+<!--<div id="supp" class="ui green mini modal">-->
+    <!--<div class="ui red header">Attention! </div>-->
+    <!--<div class="content">-->
+        <!--<p>Êtes-vous sûr de vouloir supprimer ce genre   </p>-->
+    <!--</div>-->
     <!--<div class="actions">-->
     <!--<div class="ui positive right labeled icon button" onclick="eraseGenre()" >oui<i class="checkmark icon"></i></div>-->
     <!--<div class="ui negative right labeled icon button" >Non<i class="close icon"></i></div>-->
     <!--&lt;!&ndash;<div class="ui minus button" onclick="exitDialog()">Cancel</div>&ndash;&gt;-->
     <!--</div>-->
-    <div class="actions">
-        <input id="modal-id" type="text" hidden="">
-        <!--<div class="ui approve labeled icon button" onclick="eraseGenre()">Oh oui<i class="checkmark green icon"></i></div>-->
-        <div class="ui green approve right labeled icon button"  onclick="eraseGenre()">oui<i class="checkmark icon"></i></div>
-        <!--<div class="ui button">Fuck, pas besoin de ce bouton!</div>-->
-        <div class="ui red cancel right labeled icon button" onclick="exitDialog()">Non<i class="close icon"></i></div>
+    <!--<div class="actions">-->
+        <!--<input id="modal-id" type="text" hidden="">-->
+        <!--&lt;!&ndash;<div class="ui approve labeled icon button" onclick="eraseGenre()">Oh oui<i class="checkmark green icon"></i></div>&ndash;&gt;-->
+        <!--<div class="ui green approve right labeled icon button"  onclick="eraseGenre()">oui<i class="checkmark icon"></i></div>-->
+        <!--&lt;!&ndash;<div class="ui button">Fuck, pas besoin de ce bouton!</div>&ndash;&gt;-->
+        <!--<div class="ui red cancel right labeled icon button" onclick="exitDialog()">Non<i class="close icon"></i></div>-->
+    <!--</div>-->
+<!--</div>-->
+
+<!--<div th:include="fragments/layout :: footer-js"></div>-->
+
+<!--<script type="application/javascript">-->
+    <!--$('#menu-films').addClass("active");-->
+    <!--$('.ui.dropdown').dropdown();-->
+    <!--$('#supp').modal('hide');-->
+    <!--$('#erreur').modal('hide');-->
+    <!--$(document).ready(function () {-->
+        <!--tinymce.init({-->
+            <!--selector: '#summary'-->
+        <!--});-->
+    <!--});-->
+
+
+    <!--//-->
+    <!--// function openDialogAdd() {-->
+    <!--//     $('#supp').modal('hide');-->
+    <!--//     $('#erreur').modal('hide');-->
+    <!--//     $('#id-genre').val(0);-->
+    <!--//     $('#name-genre').val("");-->
+    <!--//     $('#add-button').show();-->
+    <!--//     $('#mod-button').hide();-->
+    <!--//     $('#del-button').hide();-->
+    <!--//     $('#modalUi').modal('show');-->
+    <!--// }-->
+
+    <!--function eraseGenre() {-->
+        <!--console.log("aaaaaaaaa")-->
+        <!--$('#supp').modal('hide');-->
+        <!--var id = $('#modal-id').val();-->
+        <!--console.log(id);-->
+        <!--console.log(("JOEL TES MOCHE"))-->
+        <!--$.ajax({-->
+            <!--url: '/api/film/' + id,-->
+            <!--type: 'delete',-->
+            <!--dataType: 'json',-->
+            <!--contentType: 'application/json',-->
+            <!--success: onSuccessEraseNameGenre,-->
+            <!--error: onErrorOnGenreApi,-->
+        <!--});-->
+    <!--}-->
+
+
+
+
+    <!--function onErrorOnGenreApi(jqXHR, textStatus, errorThrown) {-->
+        <!--console.log('jqXHR:');-->
+        <!--console.log(jqXHR);-->
+        <!--console.log("message d'erreur: " + jqXHR.responseJSON.message);-->
+        <!--console.log('textStatus:');-->
+        <!--console.log(textStatus);-->
+        <!--console.log('errorThrown:');-->
+        <!--console.log(errorThrown);-->
+        <!--$('#erreur').text("Echec de l'opération\n"+jqXHR.responseJSON.message);-->
+        <!--$('#erreur').modal('show');-->
+    <!--}-->
+
+
+    <!--function onSuccessEraseNameGenre(result) {-->
+        <!--$('#rgenre' + result.id).remove();-->
+    <!--}-->
+
+    <!--function exitDialog() {-->
+        <!--$('#modalUi').modal('hide');-->
+    <!--}-->
+
+    <!--/**/-->
+    <!--function veriDialog(id){-->
+        <!--console.log("aaaaaaaaa")-->
+        <!--$('#supp').modal('show');-->
+        <!--$('#modal-id').val(id);-->
+    <!--}-->
+
+
+<!--</script>-->
+<!--<div class="container">-->
+    <!--<div class="wrapper" th:each="film: ${films}">-->
+    <!--<div class="col">-->
+        <!--<img th:src="@{'/img/poster/film/'+${film.id}}">-->
+        <!--<div class="card">-->
+            <!--<div class="card-body">-->
+                <!--<h5 class="card-title"><h3 th:text="${film.title}">Titre</h3></h5>-->
+                <!--&lt;!&ndash;<p class="card-text">With supporting text below as a natural lead-in to additional content.</p>&ndash;&gt;-->
+                <!--<a href="#" class="btn btn-primary"></a>-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</div>-->
+
+<!--</div></div>-->
+<div class="container">
+    <div class="row imagetiles">
+        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6">
+            <img src=https://i.scdn.co/image/2fd8fa0f7ef2f83691a0fb9628ee369b8e3b688e class="img-responsive">
+        </div>
+        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6">
+            <img src=https://i.scdn.co/image/2fd8fa0f7ef2f83691a0fb9628ee369b8e3b688e class="img-responsive">
+        </div>
+        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6">
+            <img src=https://i.scdn.co/image/2fd8fa0f7ef2f83691a0fb9628ee369b8e3b688e class="img-responsive">
+        </div>
+        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6">
+            <img src=https://i.scdn.co/image/2fd8fa0f7ef2f83691a0fb9628ee369b8e3b688e class="img-responsive">
+        </div>
     </div>
 </div>
-
-<div th:include="fragments/layout :: footer-js"></div>
-
-<script type="application/javascript">
-    $('#menu-films').addClass("active");
-    $('.ui.dropdown').dropdown();
-    $('#supp').modal('hide');
-    $('#erreur').modal('hide');
-    $(document).ready(function () {
-        tinymce.init({
-            selector: '#summary'
-        });
-    });
-
-
-    //
-    // function openDialogAdd() {
-    //     $('#supp').modal('hide');
-    //     $('#erreur').modal('hide');
-    //     $('#id-genre').val(0);
-    //     $('#name-genre').val("");
-    //     $('#add-button').show();
-    //     $('#mod-button').hide();
-    //     $('#del-button').hide();
-    //     $('#modalUi').modal('show');
-    // }
-    
-    function eraseGenre() {
-        console.log("aaaaaaaaa")
-        $('#supp').modal('hide');
-        var id = $('#modal-id').val();
-        console.log(id);
-        console.log(("JOEL TES MOCHE"))
-        $.ajax({
-            url: '/api/film/' + id,
-            type: 'delete',
-            dataType: 'json',
-            contentType: 'application/json',
-            success: onSuccessEraseNameGenre,
-            error: onErrorOnGenreApi,
-        });
-    }
-
-
-
-
-    function onErrorOnGenreApi(jqXHR, textStatus, errorThrown) {
-        console.log('jqXHR:');
-        console.log(jqXHR);
-        console.log("message d'erreur: " + jqXHR.responseJSON.message);
-        console.log('textStatus:');
-        console.log(textStatus);
-        console.log('errorThrown:');
-        console.log(errorThrown);
-        $('#erreur').text("Echec de l'opération\n"+jqXHR.responseJSON.message);
-        $('#erreur').modal('show');
-    }
-
-
-    function onSuccessEraseNameGenre(result) {
-        $('#rgenre' + result.id).remove();
-    }
-
-    function exitDialog() {
-        $('#modalUi').modal('hide');
-    }
-
-    /**/
-    function veriDialog(id){
-        console.log("aaaaaaaaa")
-        $('#supp').modal('show');
-        $('#modal-id').val(id);
-    }
-
-
-</script>
-
-
-
-
 
 </body>
 </html>
