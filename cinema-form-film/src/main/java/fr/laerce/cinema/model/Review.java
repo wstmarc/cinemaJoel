@@ -5,6 +5,12 @@ import java.sql.Timestamp;
 
 @Entity
 public class Review {
+    public static final int WAITING_MODERATION = 1;
+    public static final int PUBLISHED = 2;
+    public static final int MUST_BE_MODIFIED = 3;
+    public static final int REJECTED = 4;
+    public static final int DELETED = 5;
+    public static final int ABANDONNED = 6;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
@@ -16,11 +22,12 @@ public class Review {
     @Column(name = "datte", nullable = false)
     private Timestamp date;
     @ManyToOne
-    @JoinColumn(name="film_id")
+    @JoinColumn(name = "film_id")
     private Film film;
     @ManyToOne
-    @JoinColumn(name="user_id")
+    @JoinColumn(name = "user_id")
     private User user;
+    private int state = Review.WAITING_MODERATION; // Point de départ
 
     public long getId() {
         return id;
@@ -83,5 +90,71 @@ public class Review {
         result = 31 * result + (article != null ? article.hashCode() : 0);
         result = 31 * result + (date != null ? date.hashCode() : 0);
         return result;
+    }
+
+    public int getState() {
+        return this.state;
+    }
+
+    private boolean canTransitTo(int targetState){
+
+        boolean result;
+        switch (targetState) {
+            case Review.REJECTED :
+                result = this.getState() == Review.WAITING_MODERATION;
+                break;
+            case Review.DELETED :
+                result = this.getState() == Review.PUBLISHED;
+                break;
+            case Review.WAITING_MODERATION :
+                result = this.getState() == Review.PUBLISHED
+                        || this.getState() == Review.WAITING_MODERATION
+                        || this.getState() == Review.MUST_BE_MODIFIED;
+                break;
+            case Review.PUBLISHED :
+                result = this.getState() == Review.WAITING_MODERATION;
+                break;
+            case Review.MUST_BE_MODIFIED :
+                result = this.getState() == Review.WAITING_MODERATION;
+                break;
+            case Review.ABANDONNED :
+                result = this.getState() == Review.MUST_BE_MODIFIED;
+                break;
+            default :
+                result = false;
+        }
+        return result;
+    }
+
+    private void transitTo(int target) throws IllegalTransitionStateException {
+        if (canTransitTo(target)){
+            this.state = target;
+        } else {
+            throw new IllegalTransitionStateException("Transition non autorisée");
+        }
+    }
+
+    public void validByModerator() throws IllegalTransitionStateException {
+        transitTo(PUBLISHED);
+    }
+
+    public void keepForEditByModerator() throws IllegalTransitionStateException {
+        transitTo(MUST_BE_MODIFIED);
+    }
+
+    public void rejectByModerator() throws IllegalTransitionStateException {
+        transitTo(REJECTED);
+    }
+
+    public void editByUser() throws IllegalTransitionStateException {
+        transitTo(WAITING_MODERATION);
+    }
+
+    public void deleteByUser() throws IllegalTransitionStateException {
+        transitTo(DELETED);
+    }
+
+    public void abandonByUser() throws IllegalTransitionStateException {
+        transitTo(ABANDONNED);
     }
 }
