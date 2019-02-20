@@ -5,11 +5,11 @@
 <!--<meta charset="UTF-8">-->
 <!--<title>Title</title>-->
 <!--</head>-->
-<body>
+<!--<body>-->
 
 
-</body>
-</html>
+<!--</body>-->
+<!--</html>-->
 
 <!doctype html>
 <html lang="fr" xmlns:th="http://www.thymeleaf.org">
@@ -163,14 +163,14 @@
 </style>
 </head>
 <body>
-<h1>Implement TheMovieDB (TMDB) API with jQuery AJAX</h1>
-<h2><a href="http://www.yogihosting.com/implement-tmdb-api-with-jquery-ajax/">Read the tutorial on YogiHosting » </a>
+<h1></h1>
+
     <button id="reset">Reset »</button>
 </h2>
-<h3>Important Link - <a href="http://www.yogihosting.com/jquery-ajax/">jQuery AJAX</a></h3>
+
 <div class="container">
     <div id="apiDiv">
-        <h4>Enter the Search Text and Press Submit Button</h4>
+        <h4>......</h4>
         <input type="text" id="searchInput" placeholder="Search actor"/>
         <button id="submit">Submit</button>
         <div class="imageDiv">
@@ -222,7 +222,7 @@
             $.ajax({
                 url: "https://api.themoviedb.org/3/person/" + resourceId + "?language=fr-FR",
                 data: {
-                    api_key: "3356865d41894a2fa9bfa84b2b5f59bb"
+                    api_key: "1348a42689a984e53728a4b3e41f7e11"
                 },
                 dataType: 'json',
                 success: function (result, status, xhr) {
@@ -255,7 +255,7 @@
         function CallAPI(page) {
             $.ajax({
                 url: "https://api.themoviedb.org/3/search/person?language=en-US&query=" + $("#searchInput").val() + "&page=" + page + "&include_adult=false",
-                data: {"api_key": "3356865d41894a2fa9bfa84b2b5f59bb"},
+                data: {"api_key": "1348a42689a984e53728a4b3e41f7e11"},
                 dataType: "json",
                 success: function (result, status, xhr) {
                     var resultHtml = $("<div class=\"resultDiv\"><p>Names</p>");
@@ -303,5 +303,6 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js"
         integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn"
         crossorigin="anonymous"></script>
+</body>
 </body>
 </html>

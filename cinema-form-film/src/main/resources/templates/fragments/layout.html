@@ -4,26 +4,34 @@
 <head>
     <title>Layout Title</title>
     <div th:fragment="header-css" th:remove="tag">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="mobile-web-app-capable" content="yes">
-        <link rel="stylesheet" href="webjars/Semantic-UI/2.4.1/semantic.min.css"
-              th:href="@{/webjars/Semantic-UI/2.4.1/semantic.min.css}"/>
+        <!--<meta name="viewport" content="width=device-width, initial-scale=1">-->
+        <!--<meta charset="UTF-8">-->
+        <!--<meta name="viewport" content="width=device-width, initial-scale=1">-->
+        <!--<meta name="mobile-web-app-capable" content="yes">-->
+        <!--<link rel="stylesheet" href="webjars/Semantic-UI/2.4.1/semantic.min.css"-->
+              <!--th:href="@{/webjars/Semantic-UI/2.4.1/semantic.min.css}"/>-->
+        <meta charset="utf-8"/>
+        <!--<link rel="icon" type="image/png" href="http://www.yogihosting.com/wp-content/themes/yogi-yogihosting/Images/favicon.ico" />-->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+        <link rel="stylesheet" href="/css/style.css"
+              th:href="@{/css/style.css}"/>
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
+              integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
 
     </div>
 </head>
 
 <div th:fragment="header-page">
-    <div class="ui top attached text menu">
-        <div class="header item">
-            <strong>Mon cinéma</strong>
-        </div>
-        <a class="item" id="menu-films" href="#" th:href="@{/film/list}">Films</a>
-        <a class="item" id="menu-persons" href="#" th:href="@{/person/list}">Personnes</a>
-        <a class="item" id="menu-genres" href="#" th:href="@{/genre}">Genres</a>
-    </div>
+    <!--<div class="ui top attached text menu">-->
+        <!--<div class="header item">-->
+            <!--<strong>Mon cinéma</strong>-->
+        <!--</div>-->
+        <!--<a class="item" id="menu-films" href="#" th:href="@{/film/list}">Films</a>-->
+        <!--<a class="item" id="menu-persons" href="#" th:href="@{/person/list}">Personnes</a>-->
+        <!--<a class="item" id="menu-genres" href="#" th:href="@{/genre}">Genres</a>-->
+    <!--</div>-->
 
 
 </div>
@@ -38,16 +46,21 @@
 
 
 <div th:fragment="footer-js">
-    <script src="webjars/jquery/3.3.1-1/jquery.min.js"
-            th:src="@{/webjars/jquery/3.3.1-1/jquery.min.js}"></script>
-    <script src="webjars/Semantic-UI/2.4.1/semantic.min.js"
-            th:src="@{/webjars/Semantic-UI/2.4.1/semantic.min.js}"></script>
-    <script src="webjars/tinymce/4.7.9/tinymce.min.js"
-            th:src="@{/webjars/tinymce/4.7.9/tinymce.min.js}"></script>
-    <script type="application/javascript">
-        $('.ui.dropdown.item')
-            .dropdown();
-    </script>
+    <!--<script src="webjars/jquery/3.3.1-1/jquery.min.js"-->
+            <!--th:src="@{/webjars/jquery/3.3.1-1/jquery.min.js}"></script>-->
+    <!--<script src="webjars/Semantic-UI/2.4.1/semantic.min.js"-->
+            <!--th:src="@{/webjars/Semantic-UI/2.4.1/semantic.min.js}"></script>-->
+    <!--<script src="webjars/tinymce/4.7.9/tinymce.min.js"-->
+            <!--th:src="@{/webjars/tinymce/4.7.9/tinymce.min.js}"></script>-->
+    <!--<script type="application/javascript">-->
+        <!--$('.ui.dropdown.item')-->
+            <!--.dropdown();-->
+    <!--</script>-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="/js/pagination.js" th:src="@{/js/pagination.js}"></script>
+    <script src="/js/searchMovie.js" th:src="@{/js/searchMovie.js}"></script>
+
 </div>
 </body>
 </html>
