@@ -32,6 +32,9 @@ public class FilmController {
 
     @Autowired
     TmdbFilmDao tmdbFilmDao;
+    @Autowired
+    RoleDao roleDao;
+
 
 
 
@@ -55,6 +58,7 @@ public class FilmController {
     @GetMapping("/detail/{id}")
     public String detail(@PathVariable("id") long id, Model model) {
         model.addAttribute("film", filmManager.getById(id));
+        model.addAttribute("roles", roleDao.findByFilm_IdOrderByRankAsc(id));
         return "film/detail";
     }
 

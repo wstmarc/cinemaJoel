@@ -6,7 +6,9 @@ $(document).ready(function () {
     $("#submit").click(function (e) {
         var validate = Validate();
         $("#message").html(validate);
-        if (validate.length == 0) {CallAPI(1);}
+        if (validate.length == 0) {
+
+            CallAPI(1);}
     });
 
     $("#message").on("click", ".result", function () {
@@ -27,6 +29,7 @@ $(document).ready(function () {
     }
 
     function onSuccessAddFilm(result) {
+
         $("#myModal").modal("hide");
         $("#monModal").modal("show");
         $("#boutonSucces").attr("href", "/film/detail/" + result.id);
@@ -82,6 +85,7 @@ $(document).ready(function () {
     });
 
     function CallAPI(page) {
+
         $.ajax({
             url: "https://api.themoviedb.org/3/search/movie?language=fr-FR&query=" + $("#searchInput").val() + "&page=" + page + "&include_adult=false",
             data: {"api_key": "1348a42689a984e53728a4b3e41f7e11"},

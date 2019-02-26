@@ -12,48 +12,411 @@
 <div th:include="fragments/layout :: header-page">
 </div>
 <style>
-    #image{
+    #image0 {
         width: 90%;
         height: 50%;
-    }
-</style>
 
-<div class="ui container padded grid">
-    <div class="two column row">
-        <div class="four wide column">
-            <div class="ui medium image">
-                <img src="#" th:src="@{'/img/poster/film/'+${film.id}}"/>
-            </div>
+    }
+
+    img.card-img-top {
+        width: 90%;
+        height: 50%;
+
+    }
+
+    #image {
+        width: 90%;
+        height: 50%;
+
+    }
+
+    #image2 {
+        width: 90%;
+        height: 50%;
+
+    }
+
+    #image3 {
+        width: 90%;
+        height: 50%;
+
+    }
+
+    #image3 {
+        width: 90%;
+        height: 50%;
+
+    }
+
+    #image6 {
+        width: 90%;
+        height: 50%;
+
+    }
+
+    #nomperso1 {
+        font-style: italic;
+        font-size: 20px;
+        text-align: center;
+        font-size: 14px;
+    }
+
+    #nomperso2 {
+        font-style: italic;
+        font-size: 20px;
+        text-align: center;
+        font-size: 14px;
+    }
+
+    #idrole {
+        font-style: italic;
+        font-size: x-small;
+        text-align: center;
+        color: red;
+    }
+
+    #erreurImage {
+        width: 90%;
+        height: 50%;
+
+    }
+
+    ul.action-auto {
+
+        padding: 1px;
+        display: flex;
+        justify-content: space-evenly;
+        list-style-type: none;
+
+    }
+
+    /*ul.action-auto li.tooltip a:hover{*/
+    /*color: #342931;*/
+    /*background-color: white;*/
+    /*border-color: rgba(100.00%, 100.00%, 100.00%, 0.20);*/
+    /*}*/
+    .chart {
+        opacity: 0.6;
+        font-size: 0.6em;
+        /*margin-right: 100px;*/
+        /*margin-top: 9px;*/
+    }
+
+    .real {
+        opacity: 0.6;
+        font-size: 0.5em;
+
+    }
+
+    li {
+
+        padding: 1px;
+        /*justify-content: space-evenly;*/
+        list-style-type: none;
+    }
+
+    .no_click {
+        border: 2px solid #000;
+        box-sizing: border-box;
+        background: rgba(0, 0, 0, 0.2);
+        color: #000;
+        border-radius: 50%;
+        width: 46px;
+        height: 46px;
+        padding-right: 2px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        align-content: center;
+        border-color: #ffffff;
+        color: #ffffff;
+    }
+
+
+</style>
+<div class="container">
+    <h1 th:text="${film.title}">Titre</h1>
+    <div class="row">
+        <div class="col-sm-3" style="background-color:yellow;">
+            <img style="width: 100%" src="#" th:src="@{'/img/poster/film/'+${film.id}}"/>
         </div>
-        <div class="twelve wide column">
-            <h1   th:text="${film.title}">Titre</h1>
-            <div th:utext="${film.summary}">Résumé du film</div>
-            <h4>Notation : <span th:text="${film.rating}">5.0</span></h4>
+        <div class="row" style="background-color:blue;">
+            <h4 class="real"><b>Réalisateur</b> : <span th:text="${film.director.name}">John Doe</span></h4>
+            <!--<div  style="background-color:red;text-align: left">-->
+            <span th:text="${film.title}"></span>
+            <span class="chart" th:text="${#temporals.format(film.getReleaseDate(), 'yyyy')}"></span>
+            <ul class="action-auto">
+                Popularité
+                <li class="popularité" th:text="${film.rating}">5.0</li>
+                Vote des utilisateurs
+                <li  style="size: 14px"  th:text="${film.getVoteAverage()*10}+'%' ">5.0</li>
+                <li data-toggle="tooltip" title=" Notez-le !">
+                    <span class="glyphicon glyphicon-star"></span>
+                </li>
+            </ul>
+        </div>
+        <h4><b>Genres</b> : <span th:each="genre: ${film.genres}"><span th:text="${genre.name}">genre </span></span>
+        </h4>
+        <h4><b>Synopsis</b></h4>
+        <p style="font-size: 14px" th:utext="${film.summary}">Résumé du film</p>
+        <!--</div>-->
+
+    </div>
+</div>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-4">
+
+            <!--<div class="c100 p66 green">-->
+            <!--<span  th:text="${film.getVoteAverage()*10}+'%'">12%</span>-->
+            <!--<div class="slice">-->
+            <!--<div class="bar"></div>-->
+            <!--<div class="fill"></div>-->
+            <!--</div>-->
+            <!--</div>-->
+
+
+        </div>
+        <div class="">
+
             <h4>Date de sortie : <span th:text="${film.releaseDate}">01/01/2000</span></h4>
-            <h4>Réalisateur : <span th:text="${film.director.name}">John Doe</span></h4>
-            <h4>Genres : <span th:each="genre: ${film.genres}"><span th:text="${genre.name}">genre </span>, </span></h4>
-            <h3>Tête d'affiche</h3>
-            <div class="container">
-                <div class="row">
-                    <div class="col-sm-3" th:each="role: ${film.roles}">
-                        <img id="image" class="img-thumbnail" th:src="@{'/img/photo/person/'+${role.actor.getId()}}">
-                                <!--<span th:text="${role.actor.givenname}">John</span>-->
-                                <p th:text="${role.actor.name}">Doe</p> joue le de <span th:text="${role.name}">un rôle</span>
+            <p th:text="${#temporals.format(film.getReleaseDate(), 'yyyy')}"></p>
+
+        </div>
+        <div th:include="fragments/layout :: footer-js"></div>
+        <script type="application/javascript">
+            $('#menu-films').addClass("active");
+        </script>
+    </div>
+</div>
+<h3>Tête d'affiche</h3>
+<div class="container">
+    <div class="row">
+        <div class="col-sm-2" th:each="role: ${roles}">
+            <!--<div th:text="${role.rank}"></div>-->
+            <div th:if=" ${role.rank<=4} and ${role.actor.getImagePath()!=null}">
+                <div class="container">
+                    <div class="card" style="width:150px">
+                        <img class="card-img-top" th:src="@{'/img/photo/person/'+${role.actor.getId()}}"
+                             alt="Card image"/>
+                        <div class="card-body">
+                            <h4 class="card-title"><span id="nomperso1"
+                                                         th:text="${role.actor.name}">John</span><br>
+                                <p class="card-text"><span id="idrole" th:text="${role.name}">Nom du personnage</span>
+                            </h4>
+                            </p>
                         </div>
                     </div>
                 </div>
             </div>
+            <div th:if="${role.actor.getImagePath()==null} and ${role.rank<=4}">
+                <div class="container">
+                    <div class="card" style="width:150px">
+                        <img class="card-img-top" id="erreurImage" th:src="@{'/images/img_avatar1.png'}"
+                             alt="Card image"/>
+                        <div class="card-body">
+                            <h4 class="card-title"><span id="nomperso2" th:text="${role.actor.name}">John</span><br>
+                            </h4>
+                            </p>
+                        </div>
+                    </div>
+                </div>
 
-
+            </div>
         </div>
     </div>
 </div>
-
-
-
-<div th:include="fragments/layout :: footer-js"></div>
-<script type="application/javascript">
-    $('#menu-films').addClass("active");
-</script>
+</div>
+</div>
 </body>
+</html>
+
+
+<!--<!DOCTYPE html>-->
+<!--<html lang="en" xmlns:th="http://www.thymeleaf.org">-->
+<!--<head>-->
+<!--<meta charset="UTF-8">-->
+<!--<title th:text="${film.title}">Un film</title>-->
+<!--<div th:replace="fragments/layout :: header-css">-->
+
+<!--</div>-->
+<!--</head>-->
+<!--<body>-->
+
+<!--<div th:include="fragments/layout :: header-page">-->
+<!--</div>-->
+<!--<style>-->
+<!--#image {-->
+<!--width: 90%;-->
+<!--height: 50%;-->
+
+<!--}-->
+
+<!--#image1 {-->
+<!--width: 90%;-->
+<!--height: 50%;-->
+
+<!--}-->
+
+<!--#image2 {-->
+<!--width: 90%;-->
+<!--height: 50%;-->
+
+<!--}-->
+
+<!--#image3 {-->
+<!--width: 90%;-->
+<!--height: 50%;-->
+
+<!--}-->
+
+<!--#image4 {-->
+<!--width: 90%;-->
+<!--height: 50%;-->
+
+<!--}-->
+
+<!--#image5 {-->
+<!--width: 90%;-->
+<!--height: 50%;-->
+
+<!--}-->
+
+<!--.no-image {-->
+<!--font-style: italic;-->
+<!--font-size: 20px;-->
+<!--color: red;-->
+<!--text-align: center;-->
+<!--}-->
+
+<!--#idrole {-->
+<!--font-size: 14px;-->
+<!--text-align: center;-->
+<!--}-->
+
+<!--#idrole1 {-->
+<!--font-size: 14px;-->
+<!--text-align: center;-->
+<!--}-->
+
+<!--#idrole2 {-->
+<!--font-size: 14px;-->
+<!--text-align: center;-->
+<!--}-->
+
+<!--#idrole3 {-->
+<!--font-size: 14px;-->
+<!--text-align: center;-->
+<!--}-->
+
+<!--#idrole4 {-->
+<!--font-size: 14px;-->
+<!--text-align: center;-->
+<!--}-->
+
+<!--#idrole6 {-->
+<!--font-size: 14px;-->
+<!--text-align: center;-->
+<!--}-->
+<!--</style>-->
+
+<!--<div class="ui container padded grid">-->
+<!--<div class="two column row">-->
+<!--<div class="four wide column">-->
+<!--<div class="ui medium image">-->
+<!--<img src="#" th:src="@{'/img/poster/film/'+${film.id}}"/>-->
+<!--</div>-->
+<!--</div>-->
+<!--<div class="twelve wide column">-->
+<!--<h1 th:text="${film.title}">Titre</h1>-->
+<!--<div th:utext="${film.summary}">Résumé du film</div>-->
+<!--<h4>Notation : <span th:text="${film.rating}">5.0</span></h4>-->
+<!--<h4>Date de sortie : <span th:text="${film.releaseDate}">01/01/2000</span></h4>-->
+<!--<h4>Réalisateur : <span th:text="${film.director.name}">John Doe</span></h4>-->
+<!--<h4>Genres : <span th:each="genre: ${film.genres}"><span th:text="${genre.name}">genre </span>, </span></h4>-->
+<!--<h3>Tête d'affiche</h3>-->
+<!--<div class="container">-->
+<!--<div class="row">-->
+<!--<div class="col-sm-2" th:each="role: ${roles}">-->
+<!--<div th:if="${role.actor.getImagePath()==null}">-->
+<!--&lt;!&ndash;<img style="width: 50%" th:src="@{'/images/no-image.png'}" />&ndash;&gt;-->
+
+<!--</div>-->
+
+<!--<div th:text="${role.rank}">le rang des acteurs</div>-->
+
+<!--<div th:switch="${role.rank}">-->
+<!--&lt;!&ndash;acteurs n°0&ndash;&gt;-->
+<!--<div class="image">-->
+<!--<p th:case=0><img id="image" class=""-->
+<!--th:src="@{'/img/photo/person/'+${role.actor.getId()}}">-->
+<!--<span th:text="${role.actor.name}">John</span><br>-->
+<!--<span id="idrole" th:text="${role.name}">Role</span>-->
+
+<!--</p>-->
+<!--&lt;!&ndash;acteurs n°1&ndash;&gt;-->
+<!--<p th:case=1><img id="image1" class=""-->
+<!--th:src="@{'/img/photo/person/'+${role.actor.getId()}}">-->
+<!--<span th:text="${role.actor.name}">nom de l'acteur</span><br>-->
+<!--<span id="idrole6" th:text="${role.name}">Nom du role</span>-->
+
+<!--</p>-->
+<!--&lt;!&ndash;acteur n°2&ndash;&gt;-->
+<!--<p th:case=2><img id="image2" class=""-->
+<!--th:src="@{'/img/photo/person/'+${role.actor.getId()}}">-->
+<!--<span th:text="${role.actor.name}">John</span>-->
+<!--<span id="idrole5" th:text="${role.name}">Role</span>-->
+<!--</p>-->
+<!--&lt;!&ndash;acteur n°3&ndash;&gt;-->
+<!--<p th:case=3><img id="image3" class=""-->
+<!--th:src="@{'/img/photo/person/'+${role.actor.getId()}}">-->
+<!--<span th:text="${role.actor.name}">John</span><br>-->
+<!--<span id="idrole3" th:text="${role.name}">Role</span>-->
+<!--</p>-->
+<!--&lt;!&ndash;acteur n°4&ndash;&gt;-->
+<!--<p th:case=4><img id="image4" class=""-->
+<!--th:src="@{'/img/photo/person/'+${role.actor.getId()}}">-->
+<!--<span th:text="${role.actor.name}">John</span><br>-->
+<!--<span id="idrole4" th:text="${role.name}">Role</span>-->
+<!--</p>-->
+<!--&lt;!&ndash;si l'acteur n'a pas d'affiche, alors message pas d'affiche&ndash;&gt;-->
+<!--</div>-->
+<!--&lt;!&ndash;<p th:case=3><img id="image13" class="" th:src="@{'/img/photo/person/'+${role.actor.getId()}}"></p>&ndash;&gt;-->
+
+<!--</div>-->
+<!--&lt;!&ndash;<div th:if="${role.rank}==0 && ${role.rank}==1">&ndash;&gt;-->
+<!--&lt;!&ndash;<img id="image" class="" th:src="@{'/img/photo/person/'+${role.actor.getId()}}">&ndash;&gt;-->
+<!--&lt;!&ndash;</div>&ndash;&gt;-->
+<!--&lt;!&ndash;<div th:if="${role.actor.getImagePath()==null}">&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;<img style="width: 50%" th:src="@{'/images/no-image.png'}" />&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&ndash;&gt;-->
+<!--&lt;!&ndash;</div>&ndash;&gt;-->
+
+
+<!--&lt;!&ndash;<div th:src="${'images/no-image.png'}"></div>&ndash;&gt;-->
+<!--&lt;!&ndash;<div th:unless="${role.actor.getImagePath()==null}">&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;<img id="image" class="" th:src="@{'/img/photo/person/'+${role.actor.getId()}}">&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;</div>&ndash;&gt;-->
+
+<!--&lt;!&ndash;<span th:text="${role.actor.givenname}">John</span>&ndash;&gt;-->
+
+
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+
+
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+
+
+<!--<div th:include="fragments/layout :: footer-js"></div>-->
+<!--<script type="application/javascript">-->
+<!--$('#menu-films').addClass("active");-->
+<!--</script>-->
+<!--</body>-->
 </html>

@@ -1,5 +1,5 @@
 body {
-    background: #111 no-repeat;
+    /*background: #111 no-repeat;*/
     background-image: -webkit-gradient(radial, 50% 0, 150, 50% 0, 300, from(#444), to(#111));
 }
 

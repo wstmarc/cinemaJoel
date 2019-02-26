@@ -27,6 +27,18 @@ public class Film {
     @Basic
     @Column(name = "rating", nullable = true, precision = 1)
     private double rating;
+
+    public double getVoteAverage() {
+        return voteAverage;
+    }
+
+    public void setVoteAverage(double voteAverage) {
+        this.voteAverage = voteAverage;
+    }
+
+    @Basic
+    @Column(name = "vote_utilisateur", nullable = true, precision = 1)
+    private double voteAverage;
     @Basic
     @Column(name = "image_path", nullable = true, length = 120)
     private String imagePath;
@@ -35,7 +47,7 @@ public class Film {
     private String summary;
     @Basic
     @Column(name="release_date", nullable = true)
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @DateTimeFormat(pattern = "dd-MM-yyyy")
     private LocalDate releaseDate;
     @Basic
     @Column(name = "idtmbd")
@@ -163,6 +175,7 @@ public class Film {
         Film film = (Film) o;
         return getId() == film.getId() &&
                 Double.compare(film.getRating(), getRating()) == 0 &&
+                Double.compare(film.getVoteAverage(), getVoteAverage()) == 0 &&
                 Objects.equals(getTitle(), film.getTitle()) &&
                 Objects.equals(getImagePath(), film.getImagePath()) &&
                 Objects.equals(getSummary(), film.getSummary()) &&
@@ -172,6 +185,6 @@ public class Film {
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getTitle(), getRating(), getImagePath(), getSummary(), getReleaseDate(), getIdtmbd());
+        return Objects.hash(getId(), getTitle(), getRating(), getVoteAverage(), getImagePath(), getSummary(), getReleaseDate(), getIdtmbd());
     }
 }

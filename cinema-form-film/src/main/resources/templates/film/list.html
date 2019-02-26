@@ -321,7 +321,10 @@
                             <img id="image" class="img-thumbnail" th:src="@{'/img/poster/film/'+${film.id}}">
                         </div>
                         <div class="flip-card-back">
-                            <h7><span id="titre-list-film"  th:text="${film.title}">Titre</span></h7>
+                            <h7> <span id="titre-list-film"  th:text="${film.title}">Titre</span></h7><br>
+                            <h7><b>Réalisateur:</b> <span id="real-film"  th:text="${film.getDirector().name}">Titre</span></h7><br>
+                            <h7><b>Genres : </b><span th:each="genre: ${film.genres}"><span th:text="${genre.name}">genre </span>, </span></h7>
+
                         </div>
                     </div>
                 </div>

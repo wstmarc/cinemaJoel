@@ -71,7 +71,12 @@ public class TmdbClient {
         String url = "https://image.tmdb.org/t/p/w600_and_h900_bestv2/"+film.getString("poster_path");
         InputStream image =  new URL(url).openStream();
         imageManager.savePoster(filmtest, image);
+////        image du background du film
+//        String url_image_fond = "https://image.tmdb.org/t/p/w600_and_h900_bestv2/"+film.getString("backdrop_path");
+//        InputStream image_fond =  new URL(url_image_fond).openStream();
+//        imageManager.savePoster(filmtest, image_fond);
         filmtest.setSummary(film.getString("overview"));
+        filmtest.setVoteAverage(film.getDouble("vote_average"));
         filmtest.setReleaseDate(LocalDate.parse(film.getString("release_date")));
         filmtest.setIdtmbd(new BigInteger(film.getString("id")));
         boolean adult = film.getBoolean("adult");
@@ -167,13 +172,17 @@ public class TmdbClient {
 
                 personne.setBirthday(LocalDate.parse(personneTest.optString("birthday")));
             }
+
             if (!personneTest.isNull("profile_path")){
-                Thread.sleep(100);
+           //     Thread.sleep(100);
                 String url2 = "https://image.tmdb.org/t/p/w600_and_h900_bestv2/"+personneTest.getString("profile_path");
                 InputStream image2 =  new URL(url2).openStream();
                 imageManager.savePhoto(personne, image2);
                 }
-
+                /*biography == surname dans ma bdd*/
+            personne.setSurname(personneTest.getString("biography"));
+            /*place_of_birth == givenname dans ma bdd*/
+            personne.setGivenname(personneTest.getString("place_of_birth"));
             personne.setName(personneTest.getString("name"));
             personne.setIdtmdb(new BigInteger(personneTest.getString("id")));
             if (!personManager.existsByIdtmdb(personne.getIdtmdb()))
