@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Utilisateurs</title>
+    <style>
+        .t1, .t2 { border-collapse: collapse; }
+        .t1 > tbody > tr > td { border: 1px solid red; }
+        .t2 > tbody > tr > td { border: 1px solid blue; }
+
+        .t3 td { white-space: nowrap; }
+    </style>
+</head>
+<body>
+    <h1>Liste des utilisateurs + mot de passe</h1>
+
+    <!--<p th:text="${userList}"></p>-->
+    <p th:each="user : ${userList}">
+        <!--<span th:text="${user.getName()}"></span>&lt;!&ndash;<span th:text="${user.getPassword()}"></span>&ndash;&gt;-->
+        <!-- TODO : remplacer les span(s) par un tableau -->
+        <span th:text="${user.getId()}+' '+${user.getName()}+' '+${user.getPassword()}"></span></a>
+    </p>
+    <!-- EXEMPLE DE TABLEAU -->
+<!--    <table class="ui selectable celled table">
+        <thead>
+        <tr>
+            <th>Film</th>
+        </tr>
+        </thead>
+        <tbody id="film-body">
+        <tr id="rfilm-template"><td id="film-template">un film</td></tr>
+        <tr th:each="film: ${films}" th:id="'rfilm'+${film.id}" th:onclick="'openDialogMod(' + ${film.id}+')'">
+            <td th:text="${film.title}" th:id="'film'+ ${film.id}">Un film</td>
+        </tr>
+        </tbody>
+    </table>-->
+    <!-- FIN EXEMPLE TABLEAU -->
+    <!-- # ADAPTATION EN TABLEAU # -->
+    <a href="#">fuck</a>
+    <table class="ui selectable celled table">
+        <thead>
+        <tr>
+            <th>Liste des utilisateurs + mot de passe</th>
+        </tr>
+        </thead>
+        <a>lol</a>
+        <tbody id="util-body">
+        <tr th:each="user : ${userList}" th:id="'ruser'+${user.getId()}">
+            <td th:text="${user.getId()}">Identifiant d'utilisateur</td><td><a th:href="@{newpass/{userId} (userId=${user.getId()})}" th:text="${user.getName()}">Nom d'utilisateur</a></td><td th:text="${user.getPassword()}">Mot de passe d'utilisateur</td>
+        </tr>
+        </tbody>
+        <a href="#">fuck</a>
+    </table><!-- # FIN ADAPTATION TABLEAU # -->
+    <a href="#">fuck</a>
+
+<!-- ### EXEMPLES ### -->
+    <!--Example 1:-->
+    <!--<table style="width: 100%;" class=t1>
+        <tr>
+            <td>
+                <div id="list">
+                    <table class=t2>
+                        <tr><td>Thingy stuff</td><td>foo bar</td></tr>
+                        <tr><td>Thingy stuff</td><td>foo bar</td></tr>
+                    </table>
+                </div>
+            </td>
+            <td style="width: 100%;">
+                <div id="canvas">
+                </div>
+            </td>
+        </tr>
+    </table>
+
+    <br>-->
+    <!--Example 2:-->
+
+    <!--<table style="width: 100%;" class=t1>
+        <tr>
+            <td>
+                <div id="list">
+                    <table class="t2 t3">
+                        <tr><td>Thingy stuff</td><td>foo bar</td></tr>
+                        <tr><td>Thingy stuff</td><td>foo bar</td></tr>
+                    </table>
+                </div>
+            </td>
+            <td style="width: 100%;">
+                <div id="canvas">
+                </div>
+            </td>
+        </tr>
+    </table>-->
+</body>
+</html>

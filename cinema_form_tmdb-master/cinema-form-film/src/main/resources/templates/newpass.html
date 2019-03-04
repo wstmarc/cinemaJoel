@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+    <meta charset="UTF-8">
+    <title>New Password</title>
+    <style type="text/css">
+        legend {text-align: center}
+    </style>
+</head>
+<body>
+<!--TODO: titre = Utilisateur N° 'numéro utilisateur'-->
+
+    <!--<h1 th:text="Utilisateur N ${}">Utilisateur N° XXXX</h1>-->
+
+<!-- OBJECTIF:  recup mdp depuis session admin -->
+    <h1 sec:authorize="hasAnyAuthority('ADMIN')">Page ADMIN</h1>
+    <h1 sec:authorize="hasAnyAuthority('ROLE_USER')">Page USER</h1>
+    <fieldset><legend><b><em>Formulaire Nouveau Mot de Passe</em></b></legend>
+        <form action="/newpass" class="formulaire" method="post">
+            <input name="userId" type="hidden" th:text="${userId}">
+            <!--<p th:text="${user.getName()}"></p>-->
+
+            <!--<label for="userRole"/><input sec:authorize="hasAnyAuthority('ROLE_USER')" name="userRole" id="userRole" type="text" placeholder="Votre ancien mot de passe"><br/>-->
+            <label for="userPass1"/><input size="50" name="userPass1" id="userPass1" type="text" placeholder="Entrez votre mot de passe"><br/>
+            <label for="userPass2"/><input size="50" name="userPass2" id="userPass2" type="text" placeholder="Confirmez votre mot de passe"><br/>
+            <input type="submit" value="Valider">
+        </form>
+    </fieldset>
+</body>
+</html>
